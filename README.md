@@ -5,7 +5,7 @@ UPC-Artificial Intelligence with Deep Learning (Ed. 2021-2022)-Project
 ## Enlaces interés sore image denoising
 - https://medium.com/analytics-vidhya/image-denoising-using-deep-learning-dc2b19a3fd54
 - https://towardsai.net/p/deep-learning/image-de-noising-using-deep-learning
-
+- https://pub.towardsai.net/main-types-of-neural-networks-and-its-applications-tutorial-734480d7ec8e
 ## Implementacion de noise con pytorch:
 ```python
 from torch import nn

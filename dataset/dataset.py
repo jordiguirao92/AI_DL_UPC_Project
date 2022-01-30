@@ -3,7 +3,6 @@ import random
 import torchvision.transforms as transforms
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
 import argparse
 
 from torch.utils.data import DataLoader
@@ -12,7 +11,7 @@ from torchvision import datasets
 from .config import config
 from .utils.noises import AddGaussianNoise, AddGaussianNoiseSkImage, AddSaltNoise, AddSpeckleNoise, AddSaltPeperNoise, AddPoissonNoise
 
-
+print(config)
 # Define Transform
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)), AddGaussianNoise()]) # transforms.Normalize((0.5, ), (0.5,))
 
@@ -46,9 +45,9 @@ def visualize_dataset_image(dataset):
 def visualize_batch(dataloader, classes, dataset_type):
 	# get batch
     batch = next(iter(dataloader))
-    # initialize a figure
-	fig = plt.figure(f"{dataset_type} batch"),
-	figsize=(config["batch_size"], config["batch_size"]))
+	# initialize a figure
+	fig = plt.figure(f"{dataset_type} batch")
+	figsize=(config["batch_size"], config["batch_size"])
 	# loop over the batch size
 	for i in range(0, config["batch_size"]):
 		# create a subplot

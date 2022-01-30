@@ -1,6 +1,21 @@
 # AI_DL_UPC_Project
 UPC-Artificial Intelligence with Deep Learning (Ed. 2021-2022)-Project
 
+## Init project
+
+#### Create conda enviroment
+`conda create --name aidl-project python=3.8`
+#### Activate conda enviroment
+`conda activate aidl-project`
+
+To desactivate:
+`conda deactivate`
+
+#### Install dependencies
+`pip install -r requirements.txt`
+
+
+
 
 ## Enlaces interés sore image denoising
 - https://medium.com/analytics-vidhya/image-denoising-using-deep-learning-dc2b19a3fd54

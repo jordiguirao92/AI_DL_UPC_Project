@@ -1,3 +1,4 @@
+import torch
 from skimage.util import random_noise
 
 class AddGaussianNoise(object):
@@ -67,7 +68,7 @@ class AddPoissonNoise(object):
         self.mode = mode
         
     def __call__(self, tensor):
-        return torch.tensor(random_noise(tensor, mode='poisson' clip=True))
+        return torch.tensor(random_noise(tensor, mode='poisson', clip=True))
     
     def __repr__(self):
         return self.__class__.__name__ + '(mode={0})'.format(self.mode)

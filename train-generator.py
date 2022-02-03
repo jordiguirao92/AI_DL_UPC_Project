@@ -8,7 +8,11 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 from .utils.model import get_device, save_model, binary_accuracy
 from .model.model import GeneratorUnet
+from .utils.plot import get_plot_loss
 
+
+loss_history_train = []
+loss_history_val = []
 
 def train_model(config):
     # TODO Define train/test loaders
@@ -23,13 +27,19 @@ def train_model(config):
 
     for epoch in range(config["epochs"]):
         loss, acc = train_epoch(train_loader, model, optimizer, criterion, hparams)
+        loss_history_train.append(loss)
         print(f"Train Epoch {epoch} loss={loss:.2f} acc={acc:.2f}")
+        
         loss, acc = eval_epoch(my_model, val_loader)
+        loss_history_val.append(loss)
         print(f"Eval Epoch {epoch} loss={loss:.2f} acc={acc:.2f}")
     
     end_time = time.time()
     train_time = end_time - start_time
     print(f"The training take {train_time / 60} minutes")
+
+    print("Generate plot")
+    get_plot_loss(loss_history_train, loss_history_val)
     return model
     pass
 
@@ -50,6 +60,7 @@ def train_epoch(train_loader, model, optimizer, criterion, hparams):
         losses.append(loss.item())
         accs.append(acc.item())
     return np.mean(losses), np.mean(accs)
+
 
 def eval_epoch(val_loader, model):
     accs, losses = [], []

@@ -79,3 +79,12 @@ class noiseLayer_normal(nn.Module):
 - https://www.pyimagesearch.com/2021/11/08/u-net-training-image-segmentation-models-in-pytorch/
 - https://github.com/milesial/Pytorch-UNet/blob/master/unet/unet_parts.py
 - https://github.com/yinhaoz/denoising-fluorescence/blob/d83cad96b205793da0f62f6dc8094799d61929e6/denoising/train_n2n.py#L15
+- https://github.com/chintan1995/Image-Denoising-using-Deep-Learning/blob/main/Models/(Baseline)_REDNet_256x256.ipynb
+- https://olaleyeayoola.medium.com/removing-noise-from-imag es-using-a-cnn-model-in-pytorch-part-2-306be83afa46 (useful)
+
+- https://towardsdatascience.com/pytorch-ignite-classifying-tiny-imagenet-with-efficientnet-e5b1768e5e8f
+- https://colab.research.google.com/github/ashishpatel26/Awesome-Pytorch-Tutorials/blob/main/13.%20Pytorch%20Image%20Data%20for%20Deep%20learning%20Data%20Augmentation.ipynb#scrollTo=3Wmr9mKSVufp
+- https://www.pyimagesearch.com/2021/10/11/pytorch-transfer-learning-and-image-classification/
+- https://towardsdatascience.com/beginners-guide-to-loading-image-data-with-pytorch-289c60b7afec
+- https://medium.com/secure-and-private-ai-writing-challenge/loading-image-using-pytorch-c2e2dcce6ef2
+- https://discuss.pytorch.org/t/shows-image-with-specific-index-from-mnist-dataset/29406

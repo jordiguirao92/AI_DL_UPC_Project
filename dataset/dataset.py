@@ -75,12 +75,3 @@ visualize_dataset_image(train_dataset)
 
 print("[INFO] Visualize a batch...")
 visualize_batch(train_loader, train_dataset.classes, "train")
-
-
-
-# https://towardsdatascience.com/pytorch-ignite-classifying-tiny-imagenet-with-efficientnet-e5b1768e5e8f
-# https://colab.research.google.com/github/ashishpatel26/Awesome-Pytorch-Tutorials/blob/main/13.%20Pytorch%20Image%20Data%20for%20Deep%20learning%20Data%20Augmentation.ipynb#scrollTo=3Wmr9mKSVufp
-# https://www.pyimagesearch.com/2021/10/11/pytorch-transfer-learning-and-image-classification/
-# https://towardsdatascience.com/beginners-guide-to-loading-image-data-with-pytorch-289c60b7afec
-# https://medium.com/secure-and-private-ai-writing-challenge/loading-image-using-pytorch-c2e2dcce6ef2
-# https://discuss.pytorch.org/t/shows-image-with-specific-index-from-mnist-dataset/29406

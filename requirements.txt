@@ -5,3 +5,4 @@ torch==1.7.1
 ray==1.0.1.post1
 torchvision
 scikit-image
+cv2

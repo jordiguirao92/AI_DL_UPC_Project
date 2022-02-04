@@ -75,3 +75,40 @@ visualize_dataset_image(train_dataset)
 
 print("[INFO] Visualize a batch...")
 visualize_batch(train_loader, train_dataset.classes, "train")
+
+
+
+##Proposal Eva
+
+import cv2
+import os
+import numpy as np
+from torch.utils.data import Dataset
+"""
+Esto va un poco a gustos; puedes tener una única carpeta con las imágenes siguiendo una nomenclatura que te permita asociar fácilmente las parejas. Por ejemplo "imagen_123_rgb.png" e "imagen_123_rgb_ruido.png".
+Luego puedes construirte una lista .txt listando todas las imágenes "*_rgb.png". De hecho, sería recomendable que te genraras 3 listas: training.txt, validation.txt y testing.txt.
+
+"""
+class NoiseDataset(Dataset):
+
+    def __init__(self, path_to_images, mode='training'):
+ 
+        file_to_partition_list = os.path.join(path_to_images, f"{mode}.txt")
+        self.filenames = np.readtxt(file_to_partition_list, type='str')
+        self.mode = mode
+        
+        if mode == "training":
+            np.random.shuffle(self.filenames)
+        
+
+    def __len__(self):
+        return self.filenames.shape[0]
+
+    def __getitem__(self, idx):
+
+        filename_rgb = self.filenames[idx]
+        filename_rgb_noise = filename_rgb.replace('_rgb.png', '_rgb_ruido.png')
+        nimg = cv2.imread(filename_rgb)
+        nimg_noise = cv2.imread(filename_rgb_noise)
+
+        return nimg, nimg_noise

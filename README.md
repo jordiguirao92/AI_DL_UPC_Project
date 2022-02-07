@@ -9,6 +9,9 @@ The U-Net architecture follows an encoder-decoder cascade structure, where the e
 
 [![Unet](https://929687.smushcdn.com/2407837/wp-content/uploads/2021/11/u-net_training_image_segmentation_models_in_pytorch_header.png?lossy=1&strip=1&webp=1)](https://929687.smushcdn.com/2407837/wp-content/uploads/2021/11/u-net_training_image_segmentation_models_in_pytorch_header.png?lossy=1&strip=1&webp=1)
 
+## Metricas para image denoising
+- Peak Signal to Noise Ratio
+- Structural Similarity Index
 
 ## Init project
 Use the following steps to start the project.
@@ -43,7 +46,8 @@ Use the following steps to start the model training
 
 
 ## Useful Data for the project
-
+- Normalizar la GAN entre -1,1
+- https://ipython.org/ipython-doc/3/config/extensions/autoreload.html
 ### Artificial noise with Pytorch
 ```python
 from torch import nn

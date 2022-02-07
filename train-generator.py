@@ -8,6 +8,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 from .utils.model import get_device, save_model, binary_accuracy
 from .model.model import GeneratorUnet
+from .model.modelV2 import GeneratorUNetV2
 from .utils.plot import get_plot_loss
 
 

@@ -1,7 +1,8 @@
+#IMPORTS
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-
+import torch.functional as F
+import torchvision
 
 def conv2d(inChannels, outChannels, kernel_size=3, padding=1, bias=False):
     return nn.Conv2d(inChannels, outChannels, kernel_size=kernel_size, padding=padding, bias=bias)
@@ -12,97 +13,67 @@ def relu():
 def maxPool2d(kernel_size=2):
     return nn.MaxPool2d(kernel_size=kernel_size)
     
-def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=1, padding=0):
+def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=2, padding=0):
     return nn.ConvTranspose2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
 
-class BlockDown(nn.Module):
+
+#WHAT HAPPENS IN EVERY STATION
+class Block(nn.Module):
     def __init__(self, inChannels, outChannels):
-        super().__init__
-        self.inChannels = inChannels
-        self.outChannels = outChannels
-
-        self.conv1 = conv2d(self.inChannels, self.outChannels)
-        self.conv2 = conv2d(self.inChannels, self.outChannels)
+        super().__init__()
+        self.conv1 = conv2d(inChannels, outChannels)
+        self.conv2 = conv2d(inChannels, outChannels)
         self.relu = relu()
-        self.pool = maxPool2d()
-
+    
     def forward(self, x):
-        return self.pool(self.relu(self.conv2(self.conv1(x))))
+        return self.relu(self.conv2(self.relu(self.conv1(x))))
 
-
-class BlockUp(nn.Module):
-    def __init__(self, inChannels, outChannels):
-        super().__init__
-        self.inChannels = inChannels
-        self.outChannels = outChannels
-
-        self.conv1 = conv2d(self.inChannels, self.outChannels)
-        self.conv2 = conv2d(self.inChannels, self.outChannels)
-        self.relu = relu()
-        self.pool = convTranspose2d(self.inChannels, self.outChannels)
-
-    def forward(self, x):
-        return self.pool(self.relu(self.conv2(self.conv1(x))))
-
-
+#DOWNSAMPLING USING THE STATIONS
 class Encoder(nn.Module):
-    def __init__(self):
-        super().__init__
-        self.block1 = BlockDown(3, 32)
-        self.block2 = BlockDown(32, 64)
-        self.block3 = BlockDown(64, 128)
-        self.block4 = BlockDown(128, 256)
-        self.block5 = BlockDown(256, 512)
-
+    def __init__(self, chs=(3,64,128,256,512,1024)):
+        super().__init__()
+        self.enc_blocks = nn.ModuleList([Block(chs[i], chs[i+1]) for i in range(len(chs)-1)])
+        self.pool = maxPool2d()
+    
     def forward(self, x):
-        x = self.block1(x)
-        x = self.block2(x)
-        x = self.block3(x)
-        x = self.block4(x)
-        x = self.block5(x)
-        return x
+        ftrs = [] #We need to store the outputs to pass them later into the decoder (U-Net)
+        for block in self.enc_blocks:
+            x = block(x)
+            ftrs.append(x)
+            x = self.pool(x)
+        return ftrs
 
-
+#UPSAMPLING
 class Decoder(nn.Module):
-    def __init__(self):
-        super().__init__
-        self.block1 = BlockUp(512, 1024)
-        self.block2 = BlockUp(1024, 512)
-        self.block3 = BlockUp(512, 256)
-        self.block4 = BlockUp(256, 128)
-        self.block5 = BlockUp(128, 64)
+    def __init__(self, chs=(1024, 512, 256, 128, 64)):
+        super().__init__()
+        self.chs = chs
+        self.upconvs = nn.ModuleList([convTranspose2d(chs[i], chs[i+1]) for i in range(len(chs)-1)])
+        self.dec_blocks = nn.ModuleList([Block(chs[i], chs[i+1]) for i in range(len(chs)-1)]) 
+        
+    def forward(self, x, encoder_features):
+        for i in range(len(self.chs)-1):
+            x = self.upconvs[i](x)
+            enc_ftrs = self.crop(encoder_features[i], x)
+            x = torch.cat([x, enc_ftrs], dim=1)
+            x = self.dec_blocks[i](x)
+        return x
+    
+    def crop(self, enc_ftrs, x):
+        _, _, H, W = x.shape
+        enc_ftrs   = torchvision.transforms.CenterCrop([H, W])(enc_ftrs)
+        return enc_ftrs
+
+#U-Net
+class GeneratorUNet(nn.Module):
+    def __init__(self, enc_chs=(3,64,128,256,512,1024), dec_chs=(1024, 512, 256, 128, 64), num_class=1):
+        super().__init__()
+        self.encoder = Encoder(enc_chs)
+        self.decoder = Decoder(dec_chs)
+        self.head = conv2d(dec_chs[-1], num_class, 1)
 
     def forward(self, x):
-        x = self.block1(x)
-        x = self.block2(x)
-        x = self.block3(x)
-        x = self.block4(x)
-        x = self.block5(x)
-        return x
-
-class Output(nn.Module):
-    def __init__(self, inChannels, outChannels):
-        super().__init__
-        self.inChannels = inChannels
-        self.outChannels = outChannels
-
-        self.conv1 = conv2d(64, 32)
-        self.conv2 = conv2d(32, 2, kernel_size=1)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        return x
-
-class GeneratorUnet(nn.Module):
-    def __init__(self):
-        super().__init__
-        self.encoder = Encoder()
-        self.decoder = Decoder()
-        self.output = Output()
-
-    def forward(self, x):
-        x = self.encoder(x)
-        x = self.decoder(x)
-        x = self.output(x)
-        return x
+        enc_ftrs = self.encoder(x)
+        out = self.decoder(enc_ftrs[::-1][0], enc_ftrs[::-1][1:])
+        out = self.head(out)
+        return out

@@ -27,6 +27,7 @@ def train_model(config):
     # TODO Define the criterion
     # lossFunc = BCEWithLogitsLoss()
     # criterion = nn.CrossEntropyLoss()
+    # loss = F.mse_loss(denoised, noisy_target, reduction='sum')
     #criterion = 
     
     start_time = time.time()

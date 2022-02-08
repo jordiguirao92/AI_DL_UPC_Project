@@ -42,6 +42,9 @@ Use the following steps to start the model training
 
     `python train-generator.py`
 
+### Check logs in localhost 6006
+
+`tensorboard --logdir=logs`
 
 
 

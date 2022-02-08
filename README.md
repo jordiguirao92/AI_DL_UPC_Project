@@ -105,3 +105,5 @@ class noiseLayer_normal(nn.Module):
 
 ### Metrics
 - https://ourcodeworld.com/articles/read/991/how-to-calculate-the-structural-similarity-index-ssim-between-two-images-with-python
+- https://scikit-image.org/docs/stable/auto_examples/transform/plot_ssim.html
+- https://scikit-image.org/docs/stable/api/skimage.metrics.html#skimage.metrics.peak_signal_noise_ratio

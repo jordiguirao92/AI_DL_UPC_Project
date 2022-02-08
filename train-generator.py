@@ -21,10 +21,12 @@ def train_model(config):
     model = GeneratorUnet().to(get_device)
     # TODO Define optimizer
     # Adam(unet.parameters(), lr=config.INIT_LR)
+    # optimizer = optim.RMSprop(net.parameters(), lr=learning_rate, weight_decay=1e-8, momentum=0.9)
     #optimizer = 
     
     # TODO Define the criterion
     # lossFunc = BCEWithLogitsLoss()
+    # criterion = nn.CrossEntropyLoss()
     #criterion = 
     
     start_time = time.time()

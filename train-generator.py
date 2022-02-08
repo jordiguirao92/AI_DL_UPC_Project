@@ -20,8 +20,11 @@ def train_model(config):
     #...
     model = GeneratorUnet().to(get_device)
     # TODO Define optimizer
+    # Adam(unet.parameters(), lr=config.INIT_LR)
     #optimizer = 
+    
     # TODO Define the criterion
+    # lossFunc = BCEWithLogitsLoss()
     #criterion = 
     
     start_time = time.time()

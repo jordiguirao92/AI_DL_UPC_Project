@@ -102,3 +102,6 @@ class noiseLayer_normal(nn.Module):
 
 ### Coding resources
 - https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
+
+### Metrics
+- https://ourcodeworld.com/articles/read/991/how-to-calculate-the-structural-similarity-index-ssim-between-two-images-with-python

@@ -105,8 +105,10 @@ class noiseLayer_normal(nn.Module):
 
 ### Coding resources
 - https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
-
+- https://neuraspike.com/blog/split-and-manipulate-pixels-opencv/
+- https://pypi.org/project/image-slicer/
 ### Metrics
 - https://ourcodeworld.com/articles/read/991/how-to-calculate-the-structural-similarity-index-ssim-between-two-images-with-python
 - https://scikit-image.org/docs/stable/auto_examples/transform/plot_ssim.html
 - https://scikit-image.org/docs/stable/api/skimage.metrics.html#skimage.metrics.peak_signal_noise_ratio
+

@@ -7,21 +7,22 @@ import matplotlib.pyplot as plt
 import time
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from .utils.model import get_device, save_model, binary_accuracy
-from .model.model import GeneratorUNet
-from .utils.plot import get_plot_loss
-from .utils.metrics import get_ssim, get_psnr
-from .utils.writer import TensorboardLogger
+from utils.model import get_device, save_model, binary_accuracy
+from model.model import GeneratorUNet
+from utils.plot import get_plot_loss
+from utils.metrics import get_ssim, get_psnr
+from utils.writer import TensorboardLogger
+from dataset.dataset import NoiseDataset
 
 loss_history_train = []
 loss_history_val = []
 
 def train_model(model, config):
-    # TODO Define train/test loaders
-    #train_set = datasets.Dataset(root="", train=True, download=True, transform=transform)
-    #test_set = datasets.Dataset(root="", train=False, download=True, transform=transform)
-    #train_loader = DataLoader(train_set, batch_size=config["batch_size"], shuffle=True)
-    #test_loader = DataLoader(test_set, batch_size=config["batch_size"], shuffle=True)
+    #Define train/test loaders
+    train_set = NoiseDataset(path_to_images='./dataset/images', mode='training')
+    test_set = NoiseDataset(path_to_images='./dataset/images', mode='testing')
+    train_loader = DataLoader(train_set, batch_size=config["batch_size"], shuffle=True)
+    test_loader = DataLoader(test_set, batch_size=config["batch_size"], shuffle=True)
 
     # Optimizer: optim.RMSprop(net.parameters(), lr=learning_rate, weight_decay=1e-8, momentum=0.9)
     optimizer = optim.Adam(model.parameters(), lr=config["lr"])
@@ -39,7 +40,7 @@ def train_model(model, config):
         loss_history_train.append(loss_train)
         print(f"Train Epoch {epoch} loss={loss_train:.2f} acc={acc_train:.2f}, ssim={ssim_train:.2f}, psnr={psnr_train:.2f}")
         
-        loss_val, acc_val, ssim_val, psnr_val = eval_epoch(val_loader, model, criterion)
+        loss_val, acc_val, ssim_val, psnr_val = eval_epoch(test_loader, model, criterion)
         loss_history_val.append(loss_val)
         print(f"Eval Epoch {epoch} loss={loss_val:.2f} acc={acc_val:.2f}, ssim={ssim_val:.2f}, psnr={psnr_val:.2f}")
 
@@ -80,13 +81,13 @@ def train_epoch(train_loader, model, optimizer, criterion):
     return np.mean(losses), np.mean(accs), np.mean(ssims), np.mean(psnrs)
 
 
-def eval_epoch(val_loader, model, criterion):
+def eval_epoch(test_loader, model, criterion):
     accs, losses = [], []
     ssims, psnrs = [], []
 
     with torch.no_grad():
         model.eval()
-        for x, y in val_loader:
+        for x, y in test_loader:
             x, y = x.to(get_device), y.to(get_device)
             y_ = model(x)
             y = y.unsqueeze(1).float()
@@ -110,6 +111,6 @@ if __name__ == "__main__":
         "batch_size": 100,
         "epochs": 5,
     }
-    model = GeneratorUNet().to(get_device)
+    model = GeneratorUNet().to(get_device())
     generator = train_model(model, config)
     #save_model(generator, 'generator.pt')

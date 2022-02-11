@@ -44,7 +44,7 @@ def train_model(model, config):
         loss_history_val.append(loss_val)
         print(f"Eval Epoch {epoch} loss={loss_val:.2f} acc={acc_val:.2f}, ssim={ssim_val:.2f}, psnr={psnr_val:.2f}")
 
-        logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val, reconstruction_grid)
+        logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val)
     
     end_time = time.time()
     train_time = end_time - start_time

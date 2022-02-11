@@ -64,7 +64,7 @@ def train_epoch(train_loader, model, optimizer, criterion):
 
     for step, (x, y) in enumerate(train_loader):
         optimizer.zero_grad()
-        x, y = x.to(get_device), y.to(get_device)
+        x, y = x.to(get_device()), y.to(get_device())
         y_ = model(x)
         loss = criterion(y_, y)
         loss.backward()
@@ -88,7 +88,7 @@ def eval_epoch(test_loader, model, criterion):
     with torch.no_grad():
         model.eval()
         for x, y in test_loader:
-            x, y = x.to(get_device), y.to(get_device)
+            x, y = x.to(get_device()), y.to(get_device())
             y_ = model(x)
             y = y.unsqueeze(1).float()
             loss = criterion(y_, y)

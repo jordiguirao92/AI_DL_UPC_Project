@@ -30,8 +30,8 @@ def train_model(model, config):
     # Criterion: BCEWithLogitsLoss(), nn.CrossEntropyLoss(), nn.MSELoss(), F.mse_loss(denoised, noisy_target, reduction='sum')
     criterion = nn.MSELoss()
 
-    logger = TensorboardLogger("generator-training", model)
-    logger.log_model_graph(model, train_loader)
+    #logger = TensorboardLogger("generator-training", model)
+    #logger.log_model_graph(model, train_loader)
     
     start_time = time.time()
 
@@ -44,7 +44,7 @@ def train_model(model, config):
         loss_history_val.append(loss_val)
         print(f"Eval Epoch {epoch} loss={loss_val:.2f} acc={acc_val:.2f}, ssim={ssim_val:.2f}, psnr={psnr_val:.2f}")
 
-        logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val)
+        #logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val)
     
     end_time = time.time()
     train_time = end_time - start_time

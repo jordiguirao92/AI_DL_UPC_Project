@@ -112,3 +112,12 @@ class noiseLayer_normal(nn.Module):
 - https://scikit-image.org/docs/stable/auto_examples/transform/plot_ssim.html
 - https://scikit-image.org/docs/stable/api/skimage.metrics.html#skimage.metrics.peak_signal_noise_ratio
 
+### Utilidades
+- https://pytorch.org/docs/stable/generated/torch.transpose.html
+- https://ipython.org/
+- 
+```python
+from IPython import embed
+embed()
+```
+- Notebook Eva: https://colab.research.google.com/drive/195wAqapxodmv-wvbyxCID_pAQhS8DIR6?usp=sharing

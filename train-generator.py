@@ -19,8 +19,10 @@ loss_history_val = []
 
 def train_model(model, config):
     #Define train/test loaders
-    train_set = NoiseDataset(path_to_images='./dataset/images', mode='training')
-    test_set = NoiseDataset(path_to_images='./dataset/images', mode='testing')
+    #transform = transforms.Compose([transforms.Resize(256), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+    transform = transforms.Compose([transforms.Resize(256), transforms.ToTensor()])
+    train_set = NoiseDataset(path_to_images='./dataset/images', mode='training', transform=transform)
+    test_set = NoiseDataset(path_to_images='./dataset/images', mode='testing', transform=transform)
     train_loader = DataLoader(train_set, batch_size=config["batch_size"], shuffle=True)
     test_loader = DataLoader(test_set, batch_size=config["batch_size"], shuffle=True)
 
@@ -108,8 +110,8 @@ def eval_epoch(test_loader, model, criterion):
 if __name__ == "__main__":
     config = {
         "lr": 1e-3,
-        "batch_size": 100,
-        "epochs": 5,
+        "batch_size": 1,
+        "epochs": 3,
     }
     model = GeneratorUNet().to(get_device())
     generator = train_model(model, config)

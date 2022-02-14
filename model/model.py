@@ -13,7 +13,7 @@ def relu():
 def maxPool2d(kernel_size=2):
     return nn.MaxPool2d(kernel_size=kernel_size)
     
-def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=2, padding=0):
+def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=2, padding=1):
     return nn.ConvTranspose2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
 
 
@@ -22,8 +22,9 @@ class Block(nn.Module):
     def __init__(self, inChannels, outChannels):
         super().__init__()
         self.conv1 = conv2d(inChannels, outChannels)
-        self.conv2 = conv2d(inChannels, outChannels)
+        self.conv2 = conv2d(outChannels, outChannels)
         self.relu = relu()
+        #Añadir batchnorm
     
     def forward(self, x):
         return self.relu(self.conv2(self.relu(self.conv1(x))))
@@ -66,14 +67,15 @@ class Decoder(nn.Module):
 
 #U-Net
 class GeneratorUNet(nn.Module):
-    def __init__(self, enc_chs=(3,64,128,256,512,1024), dec_chs=(1024, 512, 256, 128, 64), num_class=1):
+    def __init__(self, enc_chs=(3,64,128,256,512,1024), dec_chs=(1024, 512, 256, 128, 64), num_channels=3, normalization=nn.Sigmoid()):
         super().__init__()
         self.encoder = Encoder(enc_chs)
         self.decoder = Decoder(dec_chs)
-        self.head = conv2d(dec_chs[-1], num_class, 1)
+        self.head = conv2d(dec_chs[-1], num_channels, 1, 0)
+        self.normalization = normalization
 
     def forward(self, x):
         enc_ftrs = self.encoder(x)
         out = self.decoder(enc_ftrs[::-1][0], enc_ftrs[::-1][1:])
         out = self.head(out)
-        return out
+        return self.normalization(out)

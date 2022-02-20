@@ -2,9 +2,9 @@ image_01_08_rgb.png
 image_01_08_rgb_noise.png
 image_01_09_rgb.png
 image_01_09_rgb_noise.png
-image_01_010_rgb.png
-image_01_010_rgb_noise.png
-image_01_011_rgb.png
-image_01_011_rgb_noise.png
-image_01_012_rgb.png
-image_01_012_rgb_noise.png
+image_01_10_rgb.png
+image_01_10_rgb_noise.png
+image_01_11_rgb.png
+image_01_11_rgb_noise.png
+image_01_12_rgb.png
+image_01_12_rgb_noise.png

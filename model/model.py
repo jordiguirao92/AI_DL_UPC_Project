@@ -1,8 +1,10 @@
 #IMPORTS
+from tkinter import Y
 import torch
 import torch.nn as nn
 import torch.functional as F
 import torchvision
+from IPython import embed
 
 def conv2d(inChannels, outChannels, kernel_size=3, padding=1, bias=False):
     return nn.Conv2d(inChannels, outChannels, kernel_size=kernel_size, padding=padding, bias=bias)
@@ -13,7 +15,7 @@ def relu():
 def maxPool2d(kernel_size=2):
     return nn.MaxPool2d(kernel_size=kernel_size)
     
-def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=2, padding=1):
+def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=2, padding=0):
     return nn.ConvTranspose2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
 
 

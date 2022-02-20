@@ -8,3 +8,4 @@ scikit-image
 opencv-python
 image_slicer
 Pillow
+IPython

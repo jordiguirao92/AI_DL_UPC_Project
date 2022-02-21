@@ -9,3 +9,5 @@ opencv-python
 image_slicer
 Pillow
 IPython
+pytorch-ignite
+pytorch_ssim

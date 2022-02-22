@@ -1,13 +1,14 @@
 import torch.optim as optim
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision import transforms
 import time
 import datetime
 from IPython import embed
 from utils.model import get_device, save_model, train_epoch, eval_epoch
-from model.model import GeneratorUNet
+from model.generator import GeneratorUNet
 from utils.writer import TensorboardLogger
-from utils.plot import get_plot_loss
+from utils.plot import get_plot_loss, get_plot_image
 from utils.dataLoader import get_data_loaders
 from utils.metrics import update_history_metrics
 
@@ -24,8 +25,8 @@ def train_model(model, config):
     # Criterion: BCEWithLogitsLoss(), nn.CrossEntropyLoss(), nn.MSELoss(), F.mse_loss(denoised, noisy_target, reduction='sum')
     criterion = nn.MSELoss()
 
-    #logger = TensorboardLogger("generator-training", model)
-    #logger.log_model_graph(model, train_loader)
+    logger = TensorboardLogger("generator-training", model)
+    logger.log_model_graph(model, train_loader)
     
     start_time = time.time()
     print(f"TRAINING START - {datetime.datetime.now()} - Your are training your model using {get_device()}")
@@ -39,7 +40,7 @@ def train_model(model, config):
         update_history_metrics('validation', loss_val, acc_val, ssim_val, psnr_val)
         print(f"Eval Epoch {epoch} loss={loss_val:.2f} acc={acc_val:.2f}, ssim={ssim_val:.2f}, psnr={psnr_val:.2f}")
 
-        #logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val)
+        logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val)
     
     end_time = time.time()
     train_time = end_time - start_time
@@ -60,4 +61,5 @@ if __name__ == "__main__":
     }
     model = GeneratorUNet().to(get_device())
     generator = train_model(model, config)
+    get_plot_image(generator)
     #save_model(generator, 'generator.pt')

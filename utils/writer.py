@@ -6,7 +6,7 @@ from torch.utils.tensorboard import SummaryWriter
 class TensorboardLogger():
 
     def __init__(self, task, model):
-        logdir = os.path.join("../logs",f"{task}-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}")
+        logdir = os.path.join("./logs",f"{task}-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}")
         self.writer = SummaryWriter(log_dir=logdir)
 
     def log_generator_training(self, model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val):

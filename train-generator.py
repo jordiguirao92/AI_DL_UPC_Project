@@ -36,11 +36,11 @@ def train_model(model, config):
         update_history_metrics('training', loss_train, acc_train, ssim_train, psnr_train)
         print(f"Train Epoch {epoch} loss={loss_train:.2f} acc={acc_train:.2f}, ssim={ssim_train:.2f}, psnr={psnr_train:.2f}")
         
-        loss_val, acc_val, ssim_val, psnr_val = eval_epoch(test_loader, model, criterion)
+        loss_val, acc_val, ssim_val, psnr_val, reconstruction_image = eval_epoch(test_loader, model, criterion)
         update_history_metrics('validation', loss_val, acc_val, ssim_val, psnr_val)
         print(f"Eval Epoch {epoch} loss={loss_val:.2f} acc={acc_val:.2f}, ssim={ssim_val:.2f}, psnr={psnr_val:.2f}")
 
-        logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val)
+        logger.log_generator_training(model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val, reconstruction_image)
     
     end_time = time.time()
     train_time = end_time - start_time

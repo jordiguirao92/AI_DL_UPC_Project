@@ -36,4 +36,4 @@ class NoiseDataset(Dataset):
             nimg_noise = self.transform(nimg_noise)
             nimg = self.transform(nimg)
 
-        return nimg, nimg_noise
+        return nimg_noise, nimg

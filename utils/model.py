@@ -64,4 +64,4 @@ def eval_epoch(test_loader, model, criterion):
             accs.append(acc.item())
             ssims.append(ssim.item())
             psnrs.append(psnr.item())
-    return np.mean(losses), np.mean(accs), np.mean(ssims), np.mean(psnrs)
+    return np.mean(losses), np.mean(accs), np.mean(ssims), np.mean(psnrs), y_

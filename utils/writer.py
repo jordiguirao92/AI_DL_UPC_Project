@@ -1,6 +1,7 @@
 import os
 import datetime
 import torch
+from torchvision.utils import make_grid
 from torch.utils.tensorboard import SummaryWriter
 
 class TensorboardLogger():
@@ -9,7 +10,7 @@ class TensorboardLogger():
         logdir = os.path.join("./logs",f"{task}-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}")
         self.writer = SummaryWriter(log_dir=logdir)
 
-    def log_generator_training(self, model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val):
+    def log_generator_training(self, model, epoch, loss_train, acc_train, ssim_train, psnr_train, loss_val, acc_val, ssim_val, psnr_val, reconstruction_image):
         self.writer.add_scalar('Generator/train_loss', loss_train, epoch)
         self.writer.add_scalar('Generator/train_acc', acc_train, epoch)
         self.writer.add_scalar('Generator/train_ssim', ssim_train, epoch)
@@ -19,6 +20,8 @@ class TensorboardLogger():
         self.writer.add_scalar('Generator/val_acc', acc_val, epoch)
         self.writer.add_scalar('Generator/val_ssim', ssim_val, epoch)
         self.writer.add_scalar('Generator/val_psnr', psnr_val, epoch)
+
+        self.writer.add_image('Reconstructed images from the validation set', make_grid(reconstruction_image), epoch)
 
         for name, weight in model.encoder.named_parameters():
             self.writer.add_histogram(f"{name}/value", weight, epoch)

@@ -42,6 +42,12 @@ Use the following steps to start the model training
 
     `python train-generator.py`
 
+You can configure some training paramaters as args:
+- `--loss` You can select between `l1` or `mse`. By default is `l1`
+- `--lr` Indicate the learning rate. By default is `0.001`
+- `--batch_size` Indicate the batch size. By default is `4`
+- `--epochs` Indicate the number of training epochs. By default is `10`
+
 ### Check logs in localhost 6006
 
 `tensorboard --logdir=logs`

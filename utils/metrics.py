@@ -14,12 +14,12 @@ psnr_history_val = []
 
 
 def get_ssim(image, image_noise):
-    #return get_ssimV2(image, image_noise)
-    return ssim(np.squeeze(image.detach().numpy()), np.squeeze(image_noise.detach().numpy()), win_size=3, channel_axis=-1)
+    return get_ssimV2(image, image_noise)
+    #return ssim(np.squeeze(image.detach().numpy()), np.squeeze(image_noise.detach().numpy()), win_size=3, channel_axis=-1)
     
 def get_psnr(image, image_noise):
-    #return get_psnrV2(image, image_noise)
-    return psnr(np.squeeze(image.detach().numpy()), np.squeeze(image_noise.detach().numpy()))
+    return get_psnrV2(image, image_noise)
+    #return psnr(np.squeeze(image.detach().numpy()), np.squeeze(image_noise.detach().numpy()))
 
 def get_ssimV2(image, image_noise):
     ssim = SSIM(data_range=1.0)

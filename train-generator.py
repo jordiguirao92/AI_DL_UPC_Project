@@ -11,6 +11,7 @@ from utils.writer import TensorboardLogger
 from utils.plot import get_plot_loss, get_plot_image
 from utils.dataLoader import get_data_loaders
 from utils.metrics import update_history_metrics
+from utils.parser import args
 
 
 def train_model(model, config):
@@ -19,11 +20,11 @@ def train_model(model, config):
     #Get train/test loaders
     train_loader, test_loader = get_data_loaders(config["batch_size"])
     
-    # Optimizer: optim.RMSprop(net.parameters(), lr=learning_rate, weight_decay=1e-8, momentum=0.9)
+    # Optimizer
     optimizer = optim.Adam(model.parameters(), lr=config["lr"])
     
-    # Criterion: BCEWithLogitsLoss(), nn.CrossEntropyLoss(), nn.MSELoss(), F.mse_loss(denoised, noisy_target, reduction='sum')
-    criterion = nn.MSELoss()
+    # Criterion
+    criterion =  config["loss"]
 
     logger = TensorboardLogger("generator-training", model)
     logger.log_model_graph(model, train_loader)
@@ -55,10 +56,18 @@ def train_model(model, config):
 
 if __name__ == "__main__":
     config = {
-        "lr": 1e-3,
-        "batch_size": 1,
-        "epochs": 3,
+        "lr": args.lr,
+        "batch_size": args.batch_size,
+        "epochs": args.epochs,
     }
+
+    if args.loss == "l1":
+        config["loss"] = nn.L1Loss()
+    else:
+        config["loss"] = nn.MSELoss()
+
+    print(f"CONFIGURATION PARAMETERS: {config}")
+
     model = GeneratorUNet().to(get_device())
     generator = train_model(model, config)
     get_plot_image(generator)

@@ -1,0 +1,18 @@
+version: '3'
+services:
+    ai-image-denoising:
+        container_name: ai-image-denoising
+        build: .
+        working_dir: /usr/app/
+        command: ["python3", "./src/train-generator.py", "--batch_size", "1" , "--epochs", "3"]
+        #entrypoint: ["python", "./src/train-generator.py"]
+        volumes:
+          - .:/usr/app/       
+        ports:
+          - 6006:6006
+        networks:
+          - ai-project
+
+networks:
+    ai-project:
+        external: true

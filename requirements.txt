@@ -11,3 +11,4 @@ Pillow
 IPython
 pytorch-ignite
 pytorch_ssim
+tensorboard

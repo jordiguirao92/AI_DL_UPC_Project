@@ -40,6 +40,7 @@ Use the following steps to start the model training
 
 - Generator training:
 
+    `cd src`
     `python train-generator.py`
 
 You can configure some training paramaters as args:

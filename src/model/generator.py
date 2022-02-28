@@ -25,10 +25,11 @@ class Block(nn.Module):
         self.conv1 = conv2d(inChannels, outChannels)
         self.conv2 = conv2d(outChannels, outChannels)
         self.relu = relu()
-        #Añadir batchnorm
+        self.batchnorm = nn.BatchNorm2d(num_features=outChannels)
+        #CHECK IF BATCHNORM CAN GO OVER HERE
     
     def forward(self, x):
-        return self.relu(self.conv2(self.relu(self.conv1(x))))
+        return self.relu(self.batchnorm((self.conv2(self.relu(self.conv1(x))))))
 
 #DOWNSAMPLING USING THE STATIONS
 class Encoder(nn.Module):

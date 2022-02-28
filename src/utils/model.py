@@ -10,17 +10,17 @@ def save_model(model, path):
 
 def accuracy(labels, outputs):
     preds = outputs.argmax(-1)
-    acc = (preds == labels.view_as(preds)).float().detach().numpy().mean()
+    acc = (preds == labels.view_as(preds)).float().cpu().detach().numpy().mean()
     return acc
     
 def binary_accuracy(labels, outputs):
     preds = outputs.round()
-    acc = (preds == labels.view_as(preds)).float().detach().numpy().mean()
+    acc = (preds == labels.view_as(preds)).float().cpu().detach().numpy().mean()
     return acc
 
 def binary_accuracy_with_logits(labels, outputs):
     preds = torch.sigmoid(outputs).round()
-    acc = (preds == labels.view_as(preds)).float().detach().numpy().mean()
+    acc = (preds == labels.view_as(preds)).float().cpu().detach().numpy().mean()
     return acc
 
 def train_epoch(train_loader, model, optimizer, criterion):

@@ -3,6 +3,7 @@ import datetime
 import torch
 from torchvision.utils import make_grid
 from torch.utils.tensorboard import SummaryWriter
+from utils.model import get_device
 
 class TensorboardLogger():
 
@@ -36,7 +37,7 @@ class TensorboardLogger():
 
     def log_model_graph(self, model, train_loader):
         batch, _ = next(iter(train_loader))
-        self.writer.add_graph(model, batch)
+        self.writer.add_graph(model, batch.to(get_device()))
 
     # TODO Checkou embeddings
     def log_embeddings(self, model, train_loader, device):

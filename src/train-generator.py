@@ -45,7 +45,7 @@ def train_model(model, config):
     
     end_time = time.time()
     train_time = end_time - start_time
-    print(f"TRAINING FINISH - {datetime.datetime.now()} - The training take {train_time / 60} minutes")
+    print(f"TRAINING FINISH - {datetime.datetime.now()} - The training take {(train_time / 60):.2f} minutes")
 
     print(f"GENERATE PLOT LOSS - {datetime.datetime.now()}")
     get_plot_loss()
@@ -71,4 +71,4 @@ if __name__ == "__main__":
     model = GeneratorUNet().to(get_device())
     generator = train_model(model, config)
     get_plot_image(generator)
-    #save_model(generator, 'generator.pt')
+    #save_model(generator, f"generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

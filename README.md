@@ -53,7 +53,10 @@ You can configure some training paramaters as args:
 
 `tensorboard --logdir=logs`
 
-
+### Google Cloud
+- Comand used to create ssh key: `ssh-keygen -t rsa -f ~/.ssh/aidl2022-project -C upcaigooglecloud -b 2048`
+- Key phrase: `imagedenoising`
+- Access: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.69.166.26`
 
 ## Useful Data for the project
 - Normalizar la GAN entre -1,1
@@ -115,6 +118,7 @@ class noiseLayer_normal(nn.Module):
 - https://neuraspike.com/blog/split-and-manipulate-pixels-opencv/
 - https://pypi.org/project/image-slicer/
 - https://www.kaggle.com/leifuer/intro-to-pytorch-loading-image-data
+- - https://pytorch.org/docs/stable/generated/torch.nn.Module.html?highlight=load_state_dict#torch.nn.Module.load_state_dict
 ### Metrics
 - https://ourcodeworld.com/articles/read/991/how-to-calculate-the-structural-similarity-index-ssim-between-two-images-with-python
 - https://scikit-image.org/docs/stable/auto_examples/transform/plot_ssim.html
@@ -130,3 +134,13 @@ embed()
 ```
 - Notebook Eva: https://colab.research.google.com/drive/195wAqapxodmv-wvbyxCID_pAQhS8DIR6?usp=sharing
 - https://colab.research.google.com/drive/1VdjXeeMz0EketpNFs7jkXQmZ1CWx1iMg?usp=sharing
+
+
+
+# Reunion Eva
+- TODO QUITAR ACCURACY
+- IDEAS: Unet partir de un modelo ya entrenado, backbones. Añadir un backbone y ver si gana algo con ese añadido. Como vamos cortos de imagenes, va bien.
+- Tener claro como se evalua.
+- Comprar con otros papers.
+- Metrica: Inspection score para las gans, como lo shumanos percibimos la calidad de las imagenes. https://machinelearningmastery.com/how-to-implement-the-inception-score-from-scratch-for-evaluating-generated-images/#:~:text=The%20Inception%20Score%2C%20or%20IS%20for%20short%2C%20is%20an%20objective,Improved%20Techniques%20for%20Training%20GANs.%E2%80%9D
+- Ruido sintético vs ruido real

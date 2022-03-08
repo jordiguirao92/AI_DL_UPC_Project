@@ -7,8 +7,8 @@ def get_data_loaders(batch_size):
     transform_train = transforms.Compose([transforms.RandomCrop(256), transforms.Resize(256), transforms.ToTensor()])
     transform_eval = transforms.Compose([transforms.CenterCrop(256), transforms.Resize(256), transforms.ToTensor()])
     train_set = NoiseDataset(path_to_images='./dataset/images', mode='training', transform=transform_train)
-    test_set = NoiseDataset(path_to_images='./dataset/images', mode='testing', transform=transform_eval)
+    eval_set = NoiseDataset(path_to_images='./dataset/images', mode='testing', transform=transform_eval)
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False)
+    eval_loader = DataLoader(eval_set, batch_size=batch_size, shuffle=False)
 
-    return train_loader, test_loader
+    return train_loader, eval_loader

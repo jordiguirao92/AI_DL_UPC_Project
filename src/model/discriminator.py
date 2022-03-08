@@ -12,16 +12,18 @@ class Discriminator(nn.Module):
         self.conv5 = nn.Conv2d(512, 512, kernel_size=4, padding=1)
         self.convOut = nn.Conv2d(512, 1, kernel_size=4, padding=1)
 
-        self.batchnorm = nn.BatchNorm2d()
+        self.batchnorm1 = nn.BatchNorm2d(128)
+        self.batchnorm2 = nn.BatchNorm2d(256)
+        self.batchnorm3 = nn.BatchNorm2d(512)
         self.act = nn.LeakyReLU(0.2)
         self.actout = nn.Sigmoid()
     
     def forward(self, x):
         #SI NO FUNCIONA PROBAR CON F.LEAKYRELU
         x = self.act(self.conv1(x))
-        x = self.act(self.batchnorm(self.conv2(x)))
-        x = self.act(self.batchnorm(self.conv3(x)))
-        x = self.act(self.batchnorm(self.conv4(x)))
-        x = self.act(self.batchnorm(self.conv5(x)))
+        x = self.act(self.batchnorm1(self.conv2(x)))
+        x = self.act(self.batchnorm2(self.conv3(x)))
+        x = self.act(self.batchnorm3(self.conv4(x)))
+        x = self.act(self.batchnorm3(self.conv5(x)))
         x = self.actout(self.convOut(x))
         return x

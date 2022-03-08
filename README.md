@@ -41,7 +41,7 @@ Use the following steps to start the model training
 - Generator training:
 
     `cd src`
-    `python train-generator.py`
+    `python generator-training.py`
 
 You can configure some training paramaters as args:
 - `--loss` You can select between `l1` or `mse`. By default is `l1`

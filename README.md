@@ -56,9 +56,11 @@ You can configure some training paramaters as args:
 ### Google Cloud
 - Comand used to create ssh key: `ssh-keygen -t rsa -f ~/.ssh/aidl2022-project -C upcaigooglecloud -b 2048`
 - Key phrase: `imagedenoising`
-- Access: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.69.166.26`
+- Access: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.68.201.52`
 - Install cuda: `apt install nvidia-cuda-toolkit`
 - Install cu: `pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html`
+- Check GPU: `hwinfo --gfxcard --short` or `sudo lshw -C display`
+- Process to isntall GPU dependencies: https://www.mvps.net/docs/install-nvidia-drivers-ubuntu-18-04-lts-bionic-beaver-linux/
 
 ## Useful Data for the project
 - Normalizar la GAN entre -1,1

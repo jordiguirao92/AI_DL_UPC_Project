@@ -44,12 +44,12 @@ def train_GAN(model_g, model_d, config):
     update_history_metrics_g('training', loss_train_g, ssim_train, psnr_train)
     update_history_metrics_d('training', loss_train_d)
     if epoch%config['log_interval']==0:
-      print(f"Train epoch: {epoch} -----  Loss Generator: {loss_train_g:.2f} -----  Loss Discriminator: {loss_train_d:.2f}")
+      print(f"Train epoch: {epoch} -- Loss Generator: {loss_train_g:.2f} -- Loss Discriminator: {loss_train_d:.2f} -- SSIM: {ssim_train:.2f} -- PSNR: {psnr_train:.2f}")
 
     loss_val, ssim_val, psnr_val, reconstruction_image = eval_epoch_GAN(eval_loader, model_g, criterionMSE)
     update_history_metrics_g('validation', loss_val, ssim_val, psnr_val)
     if epoch%config['log_interval']==0:
-      print(f"Eval epoch: {epoch} -----  Loss Generator: {loss_val:.2f}")
+      print(f"Eval epoch: {epoch} -- Loss Generator: {loss_val:.2f} -- SSIM: {ssim_val:.2f} -- PSNR: {psnr_val:.2f}")
     
     logger.log_generator_training(model_g, epoch, loss_train_g, ssim_train, psnr_train, loss_val, ssim_val, psnr_val, reconstruction_image)
     logger.log_discriminator_training(epoch, loss_train_d)
@@ -61,16 +61,18 @@ def train_GAN(model_g, model_d, config):
   print(f"GENERATE PLOT LOSS - {datetime.datetime.now()}")
   get_plot_loss()
 
-  return model_g
+  return model_g, model_d
 
 
 def gan_init(config):
     print(f"CONFIGURATION PARAMETERS: {config}")
     model_g = GeneratorUNet().to(get_device())
     model_d = Discriminator().to(get_device())
-    GAN = train_GAN(model_g, model_d, config)
-    get_plot_image(GAN)
-    #save_model(generator, f"gan-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    model_g, model_d = train_GAN(model_g, model_d, config)
+    get_plot_image(model_g)
+    #save_model(model_g, f"./checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    #save_model(model_d, f"./checkpoints/model_d-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    #checkpoint = torch.load("/checkpoints/checkpoint.pt")
 
 
 

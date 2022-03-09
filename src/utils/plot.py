@@ -6,10 +6,12 @@ from utils.model import get_device
 from IPython import embed
 
 def get_plot_loss():
-    loss_history_train, loss_history_val = get_history_metrics('loss')
+    loss_history_train_g, loss_history_val_g, loss_history_train_d, loss_history_val_d = get_history_metrics('loss')
     plt.title("Training&Validation loss")
-    plt.plot(loss_history_train, label='train')
-    plt.plot(loss_history_val, label='val')
+    plt.plot(loss_history_train_g, label='train_g')
+    plt.plot(loss_history_train_d, label='train_d')
+    plt.plot(loss_history_val_g, label='val_g')
+    plt.plot(loss_history_val_d, label='val_d')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.legend()

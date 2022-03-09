@@ -35,11 +35,11 @@ def train_model(model, config):
     for epoch in range(config["epochs"]):
         loss_train, ssim_train, psnr_train = train_epoch(train_loader, model, optimizer, criterion)
         update_history_metrics_g('training', loss_train, ssim_train, psnr_train)
-        print(f"Train Epoch {epoch} loss={loss_train:.2f}, ssim={ssim_train:.2f}, psnr={psnr_train:.2f}")
+        print(f"Train epoch: {epoch} -- Loss Generator: {loss_train:.2f} -- SSIM: {ssim_train:.2f} -- PSNR: {psnr_train:.2f}")
         
         loss_val, ssim_val, psnr_val, reconstruction_image = eval_epoch(eval_loader, model, criterion)
         update_history_metrics_g('validation', loss_val, ssim_val, psnr_val)
-        print(f"Eval Epoch {epoch} loss={loss_val:.2f}, ssim={ssim_val:.2f}, psnr={psnr_val:.2f}")
+        print(f"Eval epoch: {epoch} -- Loss Generator: {loss_val:.2f} -- SSIM: {ssim_val:.2f} -- PSNR: {psnr_val:.2f}")
 
         logger.log_generator_training(model, epoch, loss_train, ssim_train, psnr_train, loss_val, ssim_val, psnr_val, reconstruction_image)
     
@@ -58,4 +58,4 @@ def generator_init(config):
     model = GeneratorUNet().to(get_device())
     generator = train_model(model, config)
     get_plot_image(generator)
-    #save_model(generator, f"generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    #save_model(generator, f"./checkpoints/generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

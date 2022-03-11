@@ -1,7 +1,5 @@
 from image_slicer import slice
 from glob import glob
-import shutil
-import os
 
 def slice_images(path, parts):
     return slice(path, parts)
@@ -10,14 +8,10 @@ def slice_images(path, parts):
 #slice_images('dataset\original\image_1_rgb.png', 12)
 #slice_images('dataset\original\image_1_rgb_noise.png', 12)
 
-source = "dataset\original"
-destination = "dataset\images"
-allfiles = glob(source + "/*.PNG")
-
-for file in allfiles:
-    slice_images(file, 12)
+def slice_database():
+    source = "dataset/original/"
+    #source = "dataset\original" #windows base
     
-allfiles = glob(source + "/*.PNG")
-for file in allfiles:
-    if file.endswith("_rgb.PNG") == False and file.endswith("_rgb_noise.PNG") == False:
-        shutil.move(file, os.path.join(destination) + os.path.join("/") + os.path.basename(file))
+    allfiles = glob(source + "/*.PNG")
+    for file in allfiles:
+        slice_images(file, 12)

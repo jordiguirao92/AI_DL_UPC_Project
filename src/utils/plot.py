@@ -11,7 +11,7 @@ def get_plot_loss():
     plt.plot(loss_history_train_g, label='train_g')
     plt.plot(loss_history_train_d, label='train_d')
     plt.plot(loss_history_val_g, label='val_g')
-    plt.plot(loss_history_val_d, label='val_d')
+    #plt.plot(loss_history_val_d, label='val_d')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.legend()

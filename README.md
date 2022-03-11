@@ -1,7 +1,7 @@
 # AI_DL_UPC_Project
 UPC-Artificial Intelligence with Deep Learning (Ed. 2021-2022) - Project
 ## Objective
-Create a GANs for image denoising. First of all, we tried to prepare the images with artificial noise, but after analyzing it, we have decided to search for a dataset with real noised images, to do a better real approach in the model. We want to apply the model in real cases and not in artificial noisy cases.
+Create a GANs for image denoising. First of all, we tried to prepare the images with artificial noise, but after analyzing it, we have decided to search for a dataset with real noised images, to do a better real approach in the model. We want to apply the model in real cases and not in artificial noisy cases. 
 
 ## Generator model - Unet
 We are using Unet as a generator model in de GANs.

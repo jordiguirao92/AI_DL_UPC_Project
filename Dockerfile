@@ -1,5 +1,6 @@
 # set base image (host OS)
-FROM python:3.8-slim
+#python:3.8-slim 
+FROM nvidia/cuda:11.3.1-base-ubuntu20.0
 
 # set the working directory in the container
 WORKDIR /usr/app

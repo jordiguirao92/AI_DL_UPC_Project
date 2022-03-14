@@ -63,6 +63,9 @@ You can configure some training paramaters as args:
 - Check GPU: `hwinfo --gfxcard --short` or `sudo lshw -C display`
 - Process to isntall GPU dependencies: https://www.mvps.net/docs/install-nvidia-drivers-ubuntu-18-04-lts-bionic-beaver-linux/
 - Ubuntu 20.04
+- Keys for a Github repo: https://cloud.redhat.com/blog/private-git-repositories-part-2a-repository-ssh-keys
+- Exportar comando miniconda: ` export PATH=~/miniconda3/bin:$PATH`
+- Nvidia docke: `https://hub.docker.com/r/nvidia/cuda/tags`
 ## Useful Data for the project
 - Normalizar la GAN entre -1,1
 - https://ipython.org/ipython-doc/3/config/extensions/autoreload.html
@@ -123,7 +126,7 @@ class noiseLayer_normal(nn.Module):
 - https://neuraspike.com/blog/split-and-manipulate-pixels-opencv/
 - https://pypi.org/project/image-slicer/
 - https://www.kaggle.com/leifuer/intro-to-pytorch-loading-image-data
-- - https://pytorch.org/docs/stable/generated/torch.nn.Module.html?highlight=load_state_dict#torch.nn.Module.load_state_dict
+- https://pytorch.org/docs/stable/generated/torch.nn.Module.html?highlight=load_state_dict#torch.nn.Module.load_state_dict
 ### Metrics
 - https://ourcodeworld.com/articles/read/991/how-to-calculate-the-structural-similarity-index-ssim-between-two-images-with-python
 - https://scikit-image.org/docs/stable/auto_examples/transform/plot_ssim.html

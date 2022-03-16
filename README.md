@@ -153,3 +153,10 @@ embed()
 - Comprar con otros papers.
 - Metrica: Inspection score para las gans, como lo shumanos percibimos la calidad de las imagenes. https://machinelearningmastery.com/how-to-implement-the-inception-score-from-scratch-for-evaluating-generated-images/#:~:text=The%20Inception%20Score%2C%20or%20IS%20for%20short%2C%20is%20an%20objective,Improved%20Techniques%20for%20Training%20GANs.%E2%80%9D
 - Ruido sintético vs ruido real
+- en vez de batchnorm que puede afectar a distribución del color, podemos probar capas de instance normalization (a nivel de imagen en vez de batch)
+- Spectral normalization también puede ir bien (mirar normalizaciones para las GAN)
+- En vez del blurring, jugar con el peso de la loss del discriminador
+- probar de entrenar el discriminador cada x loops del generador
+learning rates
+- entrenar primero el generador, una vez tengo un resultado mas o menos. Guardamos. Cargamos y entrenamos con discriminador
+- Otra cosa a probar es cambiar sigmoid por una tanh en la salida del generador (https://arxiv.org/pdf/1511.06434.pdf y https://neptune.ai/blog/pix2pix-key-model-architecture-decisions); quizás ayude con el tema de los colores

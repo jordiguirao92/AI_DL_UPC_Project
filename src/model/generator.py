@@ -26,10 +26,19 @@ class Block(nn.Module):
         self.conv2 = conv2d(outChannels, outChannels)
         self.relu = relu()
         self.batchnorm = nn.BatchNorm2d(num_features=outChannels)
-        #CHECK IF BATCHNORM CAN GO OVER HERE
     
     def forward(self, x):
         return self.relu(self.batchnorm((self.conv2(self.relu(self.conv1(x))))))
+
+class LastBlock(nn.Module):
+    def __init__(self, inChannels, outChannels):
+        super().__init__()
+        self.conv1 = conv2d(inChannels, outChannels)
+        self.conv2 = conv2d(outChannels, outChannels)
+        self.relu = relu()
+    
+    def forward(self, x):
+        return self.relu(self.conv2(self.relu(self.conv1(x))))
 
 #DOWNSAMPLING USING THE STATIONS
 class Encoder(nn.Module):
@@ -51,15 +60,21 @@ class Decoder(nn.Module):
     def __init__(self, chs=(1024, 512, 256, 128, 64)):
         super().__init__()
         self.chs = chs
-        self.upconvs = nn.ModuleList([convTranspose2d(chs[i], chs[i+1]) for i in range(len(chs)-1)])
-        self.dec_blocks = nn.ModuleList([Block(chs[i], chs[i+1]) for i in range(len(chs)-1)]) 
+        self.upconvs = nn.ModuleList([convTranspose2d(chs[i], chs[i+1]) for i in range(len(chs)-2)])
+        self.dec_blocks = nn.ModuleList([Block(chs[i], chs[i+1]) for i in range(len(chs)-2)]) 
+        self.lastupconv = convTranspose2d(128, 64)
+        self.last_block = LastBlock(128,64) 
         
     def forward(self, x, encoder_features):
-        for i in range(len(self.chs)-1):
+        for i in range(len(self.chs)-2):
             x = self.upconvs[i](x)
             enc_ftrs = self.crop(encoder_features[i], x)
             x = torch.cat([x, enc_ftrs], dim=1)
             x = self.dec_blocks[i](x)
+        x = self.lastupconv(x)
+        enc_ftrs = self.crop(encoder_features[3], x)
+        x = torch.cat([x, enc_ftrs], dim=1)
+        x = self.last_block(x)
         return x
     
     def crop(self, enc_ftrs, x):

@@ -4,7 +4,7 @@ services:
         container_name: ai-image-denoising
         build: .
         working_dir: /usr/app/
-        command: ["python3", "./src/main.py", "--batch_size", "1" , "--epochs", "3"]
+        command: ["python", "./src/main.py", "--batch_size", "1" , "--epochs", "3"]
         #entrypoint: ["python", "./src/main.py"]
         volumes:
           - .:/usr/app/       

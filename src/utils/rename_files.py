@@ -24,14 +24,25 @@ def rename_original_images():
 
 
 def rename_sliced_images(): 
-    source = "dataset/images/"
-    allfiles = glob(source + "/*.png", recursive = True)
-    allfiles.sort()
+    source_path = "dataset/images/"
+    images = sorted(glob(source_path+"/*.png"))
 
-    for file in allfiles:
-        if re.search('noise', file):
-            splited = file.split("_")
-            os.rename(file, os.path.join(source) + os.path.join("/") + "image_" + str(splited[1]) + "_" + str(splited[-1].replace(".png", "")) + "_rgb_noise.PNG")
+    image_number_noisy = 1
+    slice_number_noisy = 1
+    image_number = 1
+    slice_number = 1
+    for image in images:
+        if fnmatchcase(image, "*_noise_*"):
+            os.rename(image, os.path.join(source_path) + os.path.join("/") + f"image_{image_number_noisy}_{slice_number_noisy}_rgb_noise.png")
+            slice_number_noisy = slice_number_noisy + 1
+            if slice_number_noisy == 13:
+                slice_number_noisy = 1
+                image_number_noisy = image_number_noisy + 1
         else:
-            splited = file.split("_")
-            os.rename(file, os.path.join(source) + os.path.join("/") + "image_" + str(splited[1]) + "_" + str(splited[-1].replace(".png", "")) + "_rgb.PNG")
+            os.rename(image, os.path.join(source_path) + os.path.join("/") + f"image_{image_number}_{slice_number}_rgb.png")
+            slice_number = slice_number + 1
+            if slice_number == 13:
+                slice_number = 1
+                image_number = image_number + 1
+
+

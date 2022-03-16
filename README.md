@@ -56,12 +56,13 @@ You can configure some training paramaters as args:
 ### Google Cloud
 - Comand used to create ssh key: `ssh-keygen -t rsa -f ~/.ssh/aidl2022-project -C upcaigooglecloud -b 2048`
 - Key phrase: `imagedenoising`
-- Access: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@104.197.199.85`
+- Access: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.68.42.198`
 - Install cuda: `apt install nvidia-cuda-toolkit`
 - Install cu: `pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html`
 - `pip install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/torch_stable.html`
 - Check GPU: `hwinfo --gfxcard --short` or `sudo lshw -C display`
 - Process to isntall GPU dependencies: https://www.mvps.net/docs/install-nvidia-drivers-ubuntu-18-04-lts-bionic-beaver-linux/
+- Process for ubuntu 20.04: https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-20-04-focal-fossa-linux
 - Ubuntu 20.04
 - Keys for a Github repo: https://cloud.redhat.com/blog/private-git-repositories-part-2a-repository-ssh-keys
 - Exportar comando miniconda: ` export PATH=~/miniconda3/bin:$PATH`

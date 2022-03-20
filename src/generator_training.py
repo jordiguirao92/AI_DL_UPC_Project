@@ -55,7 +55,7 @@ def train_model(model, config):
 
 def generator_init(config):
     print(f"CONFIGURATION PARAMETERS: {config}")
-    model = GeneratorUNet().to(get_device())
+    model = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"]).to(get_device())
     generator = train_model(model, config)
     get_plot_image(generator)
     #save_model(generator, f"./checkpoints/generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

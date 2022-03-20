@@ -40,7 +40,7 @@ def train_GAN(model_g, model_d, config):
   print(f"TRAINING GAN START - {datetime.datetime.now()} - Your are training your model using {get_device()}")
 
   for epoch in range(config["epochs"]):
-    loss_train_d, loss_train_g, ssim_train, psnr_train = train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g=criterionL1, criterion_d=criterionGAN)
+    loss_train_d, loss_train_g, ssim_train, psnr_train = train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g=criterionL1, criterion_d=criterionGAN, d_weight=config["d_weight"])
     update_history_metrics_g('training', loss_train_g, ssim_train, psnr_train)
     update_history_metrics_d('training', loss_train_d)
     if epoch%config['log_interval']==0:
@@ -66,8 +66,8 @@ def train_GAN(model_g, model_d, config):
 
 def gan_init(config):
     print(f"CONFIGURATION PARAMETERS: {config}")
-    model_g = GeneratorUNet().to(get_device())
-    model_d = Discriminator().to(get_device())
+    model_g = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"]).to(get_device())
+    model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"]).to(get_device())
     model_g, model_d = train_GAN(model_g, model_d, config)
     get_plot_image(model_g)
     #save_model(model_g, f"./checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

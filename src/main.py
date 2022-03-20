@@ -10,9 +10,20 @@ if __name__ == "__main__":
         "lr": args.lr,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
-        'log_interval': 5
+        "log_interval": 5,
+        "d_weight": args.d_weight,
+        "generator_last": args.generator_last,
+        "generator_norm": args.generator_norm,
+        "discriminator_last": args.discriminator_last,
+        "discriminator_norm": args.discriminator_norm,
+        "discriminator_activation": args.discriminator_activation
     }
 
+    if args.generator_last == "sigmoid":
+        config["generator_last"] = nn.Sigmoid()
+    elif args.generator_last == "tanh":
+        config["generator_last"] = nn.Tanh()
+        
     if args.loss == "l1":
         config["loss"] = nn.L1Loss()
     else:

@@ -53,7 +53,7 @@ def eval_epoch(test_loader, model, criterion):
 
 
 # GAN TRAINING FUNCTIONS
-def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g, criterion_d):
+def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g, criterion_d, d_weight):
     model_g.train()
     model_d.train()
     losses_d, losses_g, ssims, psnrs = [], [], [], []
@@ -89,7 +89,7 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, cr
         pred_fake = model_d.forward(fake_ab)
         loss_g_gan = criterion_d(pred_fake, True)
 
-        loss_g_l1 = criterion_g(clean_fake, clean_real) * 2.5
+        loss_g_l1 = criterion_g(clean_fake, clean_real) * d_weight
         
         loss_g = loss_g_gan + loss_g_l1 #Loss normal (L1) + lo que viene del generador (clasificar como true lo que es fake)
 

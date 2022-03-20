@@ -2,3 +2,4 @@ __pycache__/
 dataset/.DS_Store
 logs
 dataset/
+checkpoints/

@@ -97,8 +97,8 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, cr
         optimizer_g.step()
 
 
-        ssim = get_ssim(noisy_real, clean_fake)
-        psnr = get_psnr(noisy_real, clean_fake)
+        ssim = get_ssim(clean_real, clean_fake)
+        psnr = get_psnr(clean_real, clean_fake)
 
         losses_d.append(loss_d.item())
         losses_g.append(loss_g.item())
@@ -116,8 +116,8 @@ def eval_epoch_GAN(eval_loader, model_g, criterion):
         output = model_g(noisy_real)
 
         loss = criterion(output, clean_real)
-        ssim = get_ssim(noisy_real, output)
-        psnr = get_psnr(noisy_real, output)
+        ssim = get_ssim(clean_real, output)
+        psnr = get_psnr(clean_real, output)
 
         eval_losses.append(loss.item())
         ssims.append(ssim.item())

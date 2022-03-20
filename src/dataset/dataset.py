@@ -30,9 +30,9 @@ class NoiseDataset(Dataset):
     def __getitem__(self, idx):
         filename_rgb = self.filenames[idx]
         filename_rgb_noise = filename_rgb.replace('_rgb.png', '_rgb_noise.png')
-        nimg = Image.fromarray(cv2.imread(f"{self.path_to_images}/{filename_rgb}"))
+        nimg = cv2.imread(f"{self.path_to_images}/{filename_rgb}", 1)
         nimg = cv2.cvtColor(nimg, cv2.COLOR_BGR2RGB)
-        nimg_noise = Image.fromarray(cv2.imread(f"{self.path_to_images}/{filename_rgb_noise}"))
+        nimg_noise = cv2.imread(f"{self.path_to_images}/{filename_rgb_noise}", 1)
         nimg_noise = cv2.cvtColor(nimg_noise, cv2.COLOR_BGR2RGB)
         if self.transform:
             nimg_noise = self.transform(nimg_noise)

@@ -20,15 +20,24 @@ def convTranspose2d(in_channels, out_channels, kernel_size=2, stride=2, padding=
 
 #WHAT HAPPENS IN EVERY STATION
 class Block(nn.Module):
-    def __init__(self, inChannels, outChannels):
+    def __init__(self, inChannels, outChannels, normalization_layer):
         super().__init__()
         self.conv1 = conv2d(inChannels, outChannels)
         self.conv2 = conv2d(outChannels, outChannels)
         self.relu = relu()
-        self.batchnorm = nn.BatchNorm2d(num_features=outChannels)
+        self.normalization_layer = normalization_layer
+        if self.normalization_layer == "batch":
+            self.norm_layer = nn.BatchNorm2d(num_features=outChannels)
+        elif self.normalization_layer == "instance":
+            self.norm_layer = nn.InstanceNorm2d(outChannels)
+        elif self.normalization_layer == "spectral":
+            self.norm_layer = nn.utils.spectral_norm(self.conv2)
     
     def forward(self, x):
-        return self.relu(self.batchnorm((self.conv2(self.relu(self.conv1(x))))))
+        if self.normalization_layer != "False":
+            return self.relu(self.norm_layer((self.conv2(self.relu(self.conv1(x))))))
+        else:
+            return self.relu(self.conv2(self.relu(self.conv1(x))))
 
 class LastBlock(nn.Module):
     def __init__(self, inChannels, outChannels):
@@ -42,9 +51,9 @@ class LastBlock(nn.Module):
 
 #DOWNSAMPLING USING THE STATIONS
 class Encoder(nn.Module):
-    def __init__(self, chs=(3,64,128,256,512,1024)):
+    def __init__(self, normalization_layer, chs=(3,64,128,256,512,1024)):
         super().__init__()
-        self.enc_blocks = nn.ModuleList([Block(chs[i], chs[i+1]) for i in range(len(chs)-1)])
+        self.enc_blocks = nn.ModuleList([Block(chs[i], chs[i+1], normalization_layer) for i in range(len(chs)-1)])
         self.pool = maxPool2d()
     
     def forward(self, x):
@@ -57,11 +66,11 @@ class Encoder(nn.Module):
 
 #UPSAMPLING
 class Decoder(nn.Module):
-    def __init__(self, chs=(1024, 512, 256, 128, 64)):
+    def __init__(self, normalization_layer, chs=(1024, 512, 256, 128, 64)):
         super().__init__()
         self.chs = chs
         self.upconvs = nn.ModuleList([convTranspose2d(chs[i], chs[i+1]) for i in range(len(chs)-2)])
-        self.dec_blocks = nn.ModuleList([Block(chs[i], chs[i+1]) for i in range(len(chs)-2)]) 
+        self.dec_blocks = nn.ModuleList([Block(chs[i], chs[i+1], normalization_layer) for i in range(len(chs)-2)]) 
         self.lastupconv = convTranspose2d(128, 64)
         self.last_block = LastBlock(128,64) 
         
@@ -84,10 +93,10 @@ class Decoder(nn.Module):
 
 #U-Net
 class GeneratorUNet(nn.Module):
-    def __init__(self, enc_chs=(3,64,128,256,512,1024), dec_chs=(1024, 512, 256, 128, 64), num_channels=3, normalization=nn.Sigmoid()):
+    def __init__(self, enc_chs=(3,64,128,256,512,1024), dec_chs=(1024, 512, 256, 128, 64), num_channels=3, normalization=nn.Sigmoid(), normalization_layer="batch"):
         super().__init__()
-        self.encoder = Encoder(enc_chs)
-        self.decoder = Decoder(dec_chs)
+        self.encoder = Encoder(normalization_layer, enc_chs)
+        self.decoder = Decoder(normalization_layer, dec_chs)
         self.head = conv2d(dec_chs[-1], num_channels, 1, 0)
         self.normalization = normalization
 

@@ -47,3 +47,12 @@ The U-Net architecture follows an encoder-decoder cascade structure, where the e
 ## Metricas para image denoising
 - Peak Signal to Noise Ratio
 - Structural Similarity Index
+
+## Posible models
+- model_1: Generator without Batchnorm and Sigmoid `python ./src/main.py --net generator --generator_norm False`
+- model_2: Generator with Batchnorm and Sigmoid `python ./src/main.py --net generator --generator_norm batch --generator_last sigmoid`
+- model_3: Generator with Batchnorm and Tanh `python ./src/main.py --net generator --generator_norm batch --generator_last tanh`
+- model_4: Generator with Instance and Tanh `python ./src/main.py --net generator --generator_norm instance --generator_last tanh`
+- model_5: Generator with Spectral and Tanh `python ./src/main.py --net generator --generator_norm spectral --generator_last tanh`
+- model_6: Generator with Instance and Tanh + Discriminator with LeakyRelu and Sigmoid, D=2.5 `python ./src/main.py --net gan --generator_norm instance --generator_last tanh --discriminator_last sigmoid --discriminator_activation leakyRelu --d_weight 2.5` 
+- model_7: Generator with Instance and Tanh + Discriminator with LeakyRelu and Tanh, D=40 `python ./src/main.py --net gan --generator_norm instance --generator_last tanh --discriminator_last tanh --discriminator_activation leakyRelu --d_weight 40` 

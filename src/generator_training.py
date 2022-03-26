@@ -5,7 +5,7 @@ from torchvision import transforms
 import time
 import datetime
 from IPython import embed
-from utils.model import get_device, save_model, train_epoch, eval_epoch
+from utils.model import get_device, save_model, train_epoch_generator, eval_epoch_generator
 from model.generator import GeneratorUNet
 from utils.writer import TensorboardLogger
 from utils.plot import get_plot_loss, get_plot_image
@@ -14,7 +14,7 @@ from utils.metrics import update_history_metrics_g
 from utils.parser import args
 
 
-def train_model(model, config):
+def train_model_generator(model, config):
     model = model.to(get_device())
     
     #Get train/test loaders
@@ -33,11 +33,11 @@ def train_model(model, config):
     print(f"TRAINING GENERATOR START - {datetime.datetime.now()} - Your are training your model using {get_device()}")
 
     for epoch in range(config["epochs"]):
-        loss_train, ssim_train, psnr_train = train_epoch(train_loader, model, optimizer, criterion)
+        loss_train, ssim_train, psnr_train = train_epoch_generator(train_loader, model, optimizer, criterion)
         update_history_metrics_g('training', loss_train, ssim_train, psnr_train)
         print(f"Train epoch: {epoch} -- Loss Generator: {loss_train:.2f} -- SSIM: {ssim_train:.2f} -- PSNR: {psnr_train:.2f}")
         
-        loss_val, ssim_val, psnr_val, reconstruction_image = eval_epoch(eval_loader, model, criterion)
+        loss_val, ssim_val, psnr_val, reconstruction_image = eval_epoch_generator(eval_loader, model, criterion)
         update_history_metrics_g('validation', loss_val, ssim_val, psnr_val)
         print(f"Eval epoch: {epoch} -- Loss Generator: {loss_val:.2f} -- SSIM: {ssim_val:.2f} -- PSNR: {psnr_val:.2f}")
 
@@ -55,7 +55,7 @@ def train_model(model, config):
 
 def generator_init(config):
     print(f"CONFIGURATION PARAMETERS: {config}")
-    model = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"]).to(get_device())
-    generator = train_model(model, config)
+    model = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"])
+    generator = train_model_generator(model, config)
     get_plot_image(generator)
     #save_model(generator, f"./checkpoints/generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

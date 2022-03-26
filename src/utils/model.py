@@ -13,7 +13,7 @@ def save_model(model, path):
 
 
 # GENERATOR TRAINING FUNCTIONS
-def train_epoch(train_loader, model, optimizer, criterion):
+def train_epoch_generator(train_loader, model, optimizer, criterion):
     model.train()
     losses, ssims, psnrs = [], [], []
 
@@ -33,13 +33,13 @@ def train_epoch(train_loader, model, optimizer, criterion):
         psnrs.append(psnr.item())
     return np.mean(losses), np.mean(ssims), np.mean(psnrs)
 
-def eval_epoch(test_loader, model, criterion):
+def eval_epoch_generator(eval_loader, model, criterion):
+    model.eval()
     losses, ssims, psnrs = [], [], []
 
-    with torch.no_grad():
-        model.eval()
-        for x, y in test_loader:
-            x, y = x.to(get_device()), y.to(get_device())
+    for x, y in eval_loader:
+        x, y = x.to(get_device()), y.to(get_device())
+        with torch.no_grad():
             y_ = model(x)
             loss = criterion(y_, y)
             ssim = get_ssim(y, y_)
@@ -110,9 +110,9 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, cr
 def eval_epoch_GAN(eval_loader, model_g, criterion):
   model_g.eval()
   eval_losses, ssims, psnrs = [], [], []
-  with torch.no_grad():
-    for noisy_real, clean_real in eval_loader:
-        noisy_real, clean_real = noisy_real.to(get_device()), clean_real.to(get_device())
+  for noisy_real, clean_real in eval_loader:
+    noisy_real, clean_real = noisy_real.to(get_device()), clean_real.to(get_device())
+    with torch.no_grad():
         output = model_g(noisy_real)
 
         loss = criterion(output, clean_real)

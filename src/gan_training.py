@@ -41,13 +41,13 @@ def train_GAN(model_g, model_d, config):
 
   for epoch in range(config["epochs"]):
     loss_train_d, loss_train_g, ssim_train, psnr_train = train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g=criterionL1, criterion_d=criterionGAN, d_weight=config["d_weight"])
-    update_history_metrics_g('training', loss_train_g, ssim_train, psnr_train)
-    update_history_metrics_d('training', loss_train_d)
+    update_history_metrics_g('training', loss_train_g.item(), ssim_train.item(), psnr_train.item())
+    update_history_metrics_d('training', loss_train_d.item())
     if epoch%config['log_interval']==0:
       print(f"Train epoch: {epoch} -- Loss Generator: {loss_train_g:.2f} -- Loss Discriminator: {loss_train_d:.2f} -- SSIM: {ssim_train:.2f} -- PSNR: {psnr_train:.2f}")
 
     loss_val, ssim_val, psnr_val, reconstruction_image = eval_epoch_GAN(eval_loader, model_g, criterionMSE)
-    update_history_metrics_g('validation', loss_val, ssim_val, psnr_val)
+    update_history_metrics_g('validation', loss_val.item(), ssim_val.item(), psnr_val.item())
     if epoch%config['log_interval']==0:
       print(f"Eval epoch: {epoch} -- Loss Generator: {loss_val:.2f} -- SSIM: {ssim_val:.2f} -- PSNR: {psnr_val:.2f}")
     
@@ -66,10 +66,10 @@ def train_GAN(model_g, model_d, config):
 
 def gan_init(config):
     print(f"CONFIGURATION PARAMETERS: {config}")
-    model_g = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"]).to(get_device())
-    model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"]).to(get_device())
+    model_g = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"])
+    model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"])
     model_g, model_d = train_GAN(model_g, model_d, config)
-    get_plot_image(model_g)
+    #get_plot_image(model_g)
     #save_model(model_g, f"./checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
     #save_model(model_d, f"./checkpoints/model_d-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
     #checkpoint = torch.load("./checkpoints/checkpoint.pt")

@@ -7,7 +7,7 @@ Information of resources that can be util for the project development.
 ## Google Cloud Instance
 ### Access
 - Comand used to create ssh key: `ssh-keygen -t rsa -f ~/.ssh/aidl2022-project -C upcaigooglecloud -b 2048` Key phrase: `imagedenoising`
-- Connect to the instance: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.68.42.198`
+- Connect to the instance: `ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.121.195.255`
 - Keys for a Github repo in Google Cloud instance: https://cloud.redhat.com/blog/private-git-repositories-part-2a-repository-ssh-keys
 
 ### GPU-Cuda
@@ -15,6 +15,12 @@ Information of resources that can be util for the project development.
 - Install cu: ``pip install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/torch_stable.html`
 - Install Nvidia drivers guide: https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-20-04-focal-fossa-linux
 - Nvidia docker: `https://hub.docker.com/r/nvidia/cuda/tags`
+
+### Upload Images with scp
+- Be sure that we have the set up the keys in our computer to access to the instance, and we have installed scp
+- We have to execute from our local computer `scp -i ~/.ssh/aidl2022-project -r ~/Downloads/Develop/AI_DL_UPC_Project/dataset/images upcaigooglecloud@34.121.195.255:/home/upcaigooglecloud` Check the ip address.
+- The transfer files process will start. It will upload the full folder (-r). 
+- We can connect to the instance to check the new files using:`ssh -i ~/.ssh/aidl2022-project upcaigooglecloud@34.121.195.255` Important to check de ip before to execute the command, the ip is dinamic and every time the instance is started the ip is different.
 
 ### Useful Comands
 - Exportar comando miniconda: ` export PATH=~/miniconda3/bin:$PATH`

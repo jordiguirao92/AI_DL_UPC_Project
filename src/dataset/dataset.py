@@ -13,16 +13,12 @@ Luego puedes construirte una lista .txt listando todas las imágenes "*_rgb.png"
 # TODO Create the transforms in dataset
 class NoiseDataset(Dataset):
 
-    def __init__(self, path_to_images, mode='training', transform = None):
+    def __init__(self, path_to_images, mode, transform = None):
         file_to_partition_list = os.path.join(path_to_images, f"{mode}.txt")
         self.filenames = np.loadtxt(file_to_partition_list, dtype='str')
         self.mode = mode
         self.path_to_images = path_to_images
         self.transform = transform
-        
-        if mode == "training":
-            np.random.shuffle(self.filenames)
-        
 
     def __len__(self):
         return self.filenames.shape[0]
@@ -35,7 +31,6 @@ class NoiseDataset(Dataset):
         nimg_noise = cv2.imread(f"{self.path_to_images}/{filename_rgb_noise}", 1)
         nimg_noise = cv2.cvtColor(nimg_noise, cv2.COLOR_BGR2RGB)
         if self.transform:
-            nimg_noise = self.transform(nimg_noise)
             nimg = self.transform(nimg)
-
+            nimg_noise = self.transform(nimg_noise)
         return nimg_noise, nimg

@@ -45,7 +45,6 @@ class Discriminator(nn.Module):
           self.actout = nn.Tanh()
     
     def forward(self, x):
-        #SI NO FUNCIONA PROBAR CON F.LEAKYRELU
         x = self.act(self.conv1(x))
         x = self.act(self.norm1(self.conv2(x)))
         x = self.act(self.norm2(self.conv3(x)))

@@ -50,7 +50,9 @@ def eval_epoch_generator(eval_loader, model, criterion):
             psnrs.append(psnr.item())
     return np.mean(losses), np.mean(ssims), np.mean(psnrs), y_
 
-
+def test_model_generator(test_loader, model, criterion):
+    test_losses, test_ssims, test_psnrs, _ = eval_epoch_generator(test_loader, model, criterion)
+    print(f"Loss Generator: {test_losses:.2f} -- SSIM: {test_ssims:.2f} -- PSNR: {test_psnrs:.2f}")
 
 # GAN TRAINING FUNCTIONS
 def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g, criterion_d, d_weight):
@@ -123,3 +125,7 @@ def eval_epoch_GAN(eval_loader, model_g, criterion):
         ssims.append(ssim.item())
         psnrs.append(psnr.item())
   return np.mean(eval_losses), np.mean(ssims), np.mean(psnrs), output
+
+def test_model_GAN(test_loader, model_g, criterion):
+    test_losses, test_ssims, test_psnrs, _ = eval_epoch_GAN(test_loader, model_g, criterion)
+    print(f"Loss Generator: {test_losses:.2f} -- SSIM: {test_ssims:.2f} -- PSNR: {test_psnrs:.2f}")

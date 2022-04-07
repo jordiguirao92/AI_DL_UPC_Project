@@ -35,7 +35,7 @@ def inference(image_number = 126):
     output_g = model_g(t_original_noisy.to(get_device()))
     output_g = torch.squeeze(output_g)
     output_g = output_g.cpu().detach().numpy().transpose(1,2,0)
-    output_g = cv2.cvtColor(output_g, cv2.COLOR_BGR2RGB)
+    #output_g = cv2.cvtColor(output_g, cv2.COLOR_BGR2RGB)
 
     #DISPLAY IMAGES
     plt.imshow(original_clean)

@@ -5,7 +5,7 @@ from torchvision import transforms
 import time
 import datetime
 from IPython import embed
-from utils.model import get_device, save_model, train_epoch_GAN, eval_epoch_GAN
+from utils.model import get_device, save_model, train_epoch_GAN, eval_epoch_GAN, test_model_GAN
 from model.generator import GeneratorUNet
 from model.discriminator import Discriminator
 from model.ganLoss import GANLoss
@@ -25,7 +25,7 @@ def train_GAN(model_g, model_d, config):
   model_d = model_d.to(get_device())
 
   #Get train/test loaders
-  train_loader, eval_loader = get_data_loaders(config["batch_size"])
+  train_loader, eval_loader, test_loader = get_data_loaders(config["batch_size"])
 
   #Criterion_d
   criterionGAN = GANLoss().to(get_device()) 
@@ -54,12 +54,13 @@ def train_GAN(model_g, model_d, config):
     logger.log_generator_training(model_g, epoch, loss_train_g, ssim_train, psnr_train, loss_val, ssim_val, psnr_val, reconstruction_image)
     logger.log_discriminator_training(epoch, loss_train_d)
 
+  test_model_GAN(test_loader, model_g, criterionMSE)
   end = time.time()
   train_time = end-start
   print(f"The training took {(train_time/60):.2f} minutes")
 
-  print(f"GENERATE PLOT LOSS - {datetime.datetime.now()}")
-  get_plot_loss()
+  #print(f"GENERATE PLOT LOSS - {datetime.datetime.now()}")
+  #get_plot_loss()
 
   return model_g, model_d
 
@@ -70,8 +71,8 @@ def gan_init(config):
     model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"])
     model_g, model_d = train_GAN(model_g, model_d, config)
     #get_plot_image(model_g)
-    #save_model(model_g, f"./checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
-    #save_model(model_d, f"./checkpoints/model_d-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    save_model(model_g, f"../checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    save_model(model_d, f"../checkpoints/model_d-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
     #checkpoint = torch.load("./checkpoints/checkpoint.pt")
 
 

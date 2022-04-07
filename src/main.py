@@ -10,7 +10,7 @@ if __name__ == "__main__":
         "lr": args.lr,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
-        "log_interval": 5,
+        "log_interval": 1,
         "d_weight": args.d_weight,
         "generator_last": args.generator_last,
         "generator_norm": args.generator_norm,

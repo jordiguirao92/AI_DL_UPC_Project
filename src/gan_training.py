@@ -71,8 +71,8 @@ def gan_init(config):
     model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"])
     model_g, model_d = train_GAN(model_g, model_d, config)
     #get_plot_image(model_g)
-    save_model(model_g, f"../checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
-    save_model(model_d, f"../checkpoints/model_d-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    save_model(model_g, f"./checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    save_model(model_d, f"./checkpoints/model_d-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
     #checkpoint = torch.load("./checkpoints/checkpoint.pt")
 
 

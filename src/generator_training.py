@@ -61,4 +61,4 @@ def generator_init(config):
     model = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"])
     generator = train_model_generator(model, config)
     #get_plot_image(generator)
-    save_model(generator, f"../checkpoints/generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")
+    save_model(generator, f"./checkpoints/generator-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

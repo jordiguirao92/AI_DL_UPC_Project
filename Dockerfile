@@ -1,20 +1,36 @@
-# set base image (host OS)
-#python:3.8-slim 
-#nvidia/cuda:11.3.1-base-ubuntu20.0
-FROM nvidia/cuda:11.6.0-base-ubuntu20.04
+FROM nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04 as base
 
-# set the working directory in the container
-WORKDIR /usr/app
+ENV DEBIAN_FRONTEND noninteractive
 
-# copy the dependencies file to the working directory
-COPY requirements.txt requirements.txt
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get --no-install-recommends install -y \
+    wget \
+    python3.8 python3.8-dev python3.8-distutils && \
+    rm -rf /var/lib/apt /var/cache/apt && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
 
-RUN apt-get update && apt-get install -y python3-opencv
-# install dependencies
-RUN pip install -r requirements.txt
+RUN update-alternatives --install /usr/bin/python python `which python3.8` 1 && \
+    wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && \
+    rm get-pip.py
 
-# Copy code to the working directory
-#COPY src/ .
+RUN pip install -U --no-cache-dir pip && \
+    pip install --no-cache-dir -f https://download.pytorch.org/whl/cu110/torch_stable.html \
+    torch==1.7.1+cu110 \
+    torchvision==0.8.2+cu110 \
+    opencv-contrib-python-headless==4.5.5.62
 
-# command to run on container start
-#ENTRYPOINT ["python", "entrypoint.py"] Configured in the docker-compose
+#RUN pip install -U --no-cache-dir pip && \
+    #pip install --no-cache-dir -f https://download.pytorch.org/whl/cu113/torch_stable.html \
+    #torch==1.10.2+cu113 \
+    #torchvision==0.11.3+cu113 \
+    #opencv-contrib-python-headless==4.5.5.62
+
+ENV PATH=/usr/local/bin:$PATH
+
+WORKDIR /app
+
+COPY requirements-docker.txt requirements-docker.txt
+
+RUN pip install -r requirements-docker.txt

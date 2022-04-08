@@ -3,6 +3,9 @@ build_containers:
 	docker-compose build
 
 service-up: build_containers
+	docker-compose up --remove-orphans -d
+
+start:
 	docker-compose up --remove-orphans
 
 service-down:

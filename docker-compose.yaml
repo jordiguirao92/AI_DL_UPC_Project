@@ -3,16 +3,23 @@ services:
     ai-image-denoising:
         container_name: ai-image-denoising
         build: .
+        environment:
+          - NVIDIA_VISIBLE_DEVICES=all
         working_dir: /usr/app/
-        command: ["python", "./src/main.py", "--batch_size", "1" , "--epochs", "3"]
-        #entrypoint: ["python", "./src/main.py"]
+        command: ["python", "./src/main.py", "--batch_size", "1" , "--epochs", "1"]
+        #command: nvidia-smi
+        #entrypoint: ["python", "./src/main.py", "--batch_size", "1" , "--epochs", "1"]
         volumes:
           - .:/usr/app/       
         ports:
           - 6006:6006
         networks:
           - ai-project
-
+        deploy:
+          resources:
+            reservations:
+              devices:
+                - capabilities: [gpu]
 networks:
     ai-project:
         external: true

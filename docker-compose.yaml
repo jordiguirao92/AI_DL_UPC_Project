@@ -6,7 +6,7 @@ services:
         environment:
           - NVIDIA_VISIBLE_DEVICES=all
         working_dir: /usr/app/
-        command: ["python", "./src/main.py", "--batch_size", "1" , "--epochs", "1"]
+        command: ["python", "./src/main.py", "--batch_size", "5" , "--epochs", "10", "--net", "generator", "--generator_norm", "False"]
         #command: nvidia-smi
         #entrypoint: ["python", "./src/main.py", "--batch_size", "1" , "--epochs", "1"]
         volumes:

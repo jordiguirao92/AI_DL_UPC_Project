@@ -14,7 +14,8 @@ Information of resources that can be util for the project development.
 - Install cuda: `apt install nvidia-cuda-toolkit`
 - Install cu: ``pip install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/torch_stable.html`
 - Install Nvidia drivers guide: https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-20-04-focal-fossa-linux
-- Nvidia docker: `https://hub.docker.com/r/nvidia/cuda/tags`
+- Nvidia docker: https://hub.docker.com/r/nvidia/cuda/tags
+- Requirements that docker needs to use gpu: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
 
 ### Upload Images with scp
 - Be sure that we have the set up the keys in our computer to access to the instance, and we have installed scp

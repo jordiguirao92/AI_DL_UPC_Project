@@ -52,7 +52,7 @@ def eval_epoch_generator(eval_loader, model, criterion):
 
 def test_model_generator(test_loader, model, criterion):
     test_losses, test_ssims, test_psnrs, _ = eval_epoch_generator(test_loader, model, criterion)
-    print(f"Loss Generator: {test_losses:.2f} -- SSIM: {test_ssims:.2f} -- PSNR: {test_psnrs:.2f}")
+    print(f"Loss Generator-TestGenerator: {test_losses:.2f} -- SSIM-TestGenerator: {test_ssims:.2f} -- PSNR-TestGenerator: {test_psnrs:.2f}")
 
 # GAN TRAINING FUNCTIONS
 def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g, criterion_d, d_weight):
@@ -93,6 +93,7 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, cr
 
         loss_g_l1 = criterion_g(clean_fake, clean_real) * d_weight
         
+        print(f"loss_g_gan: {loss_g_gan:.2f} -- loss_g_l1: {loss_g_l1:.2f}")
         loss_g = loss_g_gan + loss_g_l1 #Loss normal (L1) + lo que viene del generador (clasificar como true lo que es fake)
 
         loss_g.backward()
@@ -128,4 +129,4 @@ def eval_epoch_GAN(eval_loader, model_g, criterion):
 
 def test_model_GAN(test_loader, model_g, criterion):
     test_losses, test_ssims, test_psnrs, _ = eval_epoch_GAN(test_loader, model_g, criterion)
-    print(f"Loss Generator: {test_losses:.2f} -- SSIM: {test_ssims:.2f} -- PSNR: {test_psnrs:.2f}")
+    print(f"Loss Generator-TestGAN: {test_losses:.2f} -- SSIM-TestGAN: {test_ssims:.2f} -- PSNR-TestGAN: {test_psnrs:.2f}")

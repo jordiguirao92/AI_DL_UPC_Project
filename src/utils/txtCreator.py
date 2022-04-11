@@ -8,6 +8,6 @@ def create_txt_files(path_file, base_name, range_images, range_partition):
                 f.write(f'{base_name}_{i}_{j}_rgb_noise.png')
                 f.write('\n')
 
-create_txt_files("./dataset/images/training.txt", "image", [1,223], [1,13]) #70%
-create_txt_files("./dataset/images/validation.txt", "image", [223,270], [1,13]) #15%
-create_txt_files("./dataset/images/testing.txt", "image", [270,318], [1,13]) #15% 
+create_txt_files("./dataset/images/training.txt", "image", [1,35], [1,13]) #70% All [1,223], [1,13]
+create_txt_files("./dataset/images/validation.txt", "image", [35,43], [1,13]) #15% All [223,270], [1,13]
+create_txt_files("./dataset/images/testing.txt", "image", [270,318], [1,13]) #15% All [1,223], [1,13]

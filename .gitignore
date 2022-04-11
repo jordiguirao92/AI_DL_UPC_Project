@@ -1,6 +1,6 @@
 __pycache__/
 dataset/.DS_Store
-logs
+logs/*
 dataset/
-checkpoints/
+checkpoints/*
 *.log

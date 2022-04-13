@@ -26,7 +26,7 @@ Information of resources that can be util for the project development.
 ### Useful Comands
 - Exportar comando miniconda: ` export PATH=~/miniconda3/bin:$PATH`
 - Check GPU: `hwinfo --gfxcard --short` or `sudo lshw -C display`
-- Checklogs inside docker-compose: `sudo docker-compose logs -t -f --tail="all"`
+- Checklogs inside docker-compose: `sudo docker-compose logs -t -f --tail="all" > namefile.log`
 
 ## Artificial noise with Pytorch
 ```python

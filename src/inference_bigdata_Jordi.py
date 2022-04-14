@@ -12,13 +12,15 @@ def inference(image_number = 316):
     transform_inference = transforms.Compose([transforms.ToPILImage(), transforms.Resize(256), transforms.ToTensor()])
 
     #PATH TO THE MODEL --> Load the model --> Create new model --> Load weights from the model
-    model1_path = "./checkpoints/model_g-20220407-200005.pt" #FULL OUR DATASET GAN 10 EPOCHS
-    model2_path = "./checkpoints/model_g-20220408-205850.pt" #SMALL OUR DATASET GAN 100 EPOCHS
-    model3_path = "./checkpoints/model_g-20220410-145239.pt" #FULL GITHUB DATASET GAN 100 EPOCHS
-    model4_path = "./checkpoints/model_g-20220411-132800.pt" #SMALL OUR DATASET GAN 50 EPOCHS - Instance
+    model1_path = "./checkpoints/gan-20220407-200005/model_g-20220407-200005.pt" #FULL OUR DATASET GAN 10 EPOCHS
+    model2_path = "./checkpoints/gan-20220408-205850/model_g-20220408-205850.pt" #SMALL OUR DATASET GAN 100 EPOCHS
+    model3_path = "./checkpoints/gan-20220410-145239/model_g-20220410-145239.pt" #FULL GITHUB DATASET GAN 100 EPOCHS
+    model4_path = "./checkpoints/gan-20220411-132800/model_g-20220411-132800.pt" #SMALL OUR DATASET GAN 50 EPOCHS - Instance
     model5_path = "./checkpoints/generator-20220412-164835.pt" #SMALL OUR DATASET Generator 70 EPOCHS
     model6_path = "./checkpoints/generator-20220413-170528.pt"
-    model8_path = "./checkpoints/model_g-20220413-193641.pt"
+    model7_path = "./checkpoints/gan-20220413-193641/model_g-20220413-193641.pt"
+    model8_path = "./checkpoints/gan-20220413-193641/model_g-20220413-193641.pt"
+    model9_path = "./checkpoints/generator-20220414-153423.pt"
 
     checkpoint1 = torch.load(model1_path)
     model_g1 = GeneratorUNet()
@@ -38,15 +40,21 @@ def inference(image_number = 316):
     checkpoint6 = torch.load(model6_path)
     model_g6 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="instance")
     model_g6.load_state_dict(checkpoint6["model_state_dict"])
+    checkpoint7 = torch.load(model7_path)
+    model_g7 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="instance")
+    model_g7.load_state_dict(checkpoint7["model_state_dict"])
     checkpoint8 = torch.load(model8_path)
     model_g8 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="instance")
     model_g8.load_state_dict(checkpoint8["model_state_dict"])
+    checkpoint9 = torch.load(model9_path)
+    model_g9 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
+    model_g9.load_state_dict(checkpoint9["model_state_dict"])
 
     #PATH TO A PAIR OF IMAGES TO APPLY INFERENCE f"Eval epoch: {epoch}
     #noisy_path = f"./dataset/original/image_{image_number}_rgb_noise.PNG"
     #clean_path = f"./dataset/original/image_{image_number}_rgb.PNG"
-    noisy_path = f"C:/Users/34619/DeepLearning/Posgraduate/AI_DL_UPC_Project/dataset/images/image_312_9_rgb_noise.png"
-    clean_path = f"C:/Users/34619/DeepLearning/Posgraduate/AI_DL_UPC_Project/dataset/images/image_312_9_rgb.png"
+    noisy_path = f"./dataset/images/image_312_9_rgb_noise.png"
+    clean_path = f"./dataset/images/image_312_9_rgb.png"
 
     #READ IMAGES AND CONVERT TO RGB (TO DISPLAY LATER WITH MATPLOTLIB)
     original_noisy = cv2.imread(noisy_path, 1)
@@ -90,31 +98,56 @@ def inference(image_number = 316):
     output_g6 = model_g6(t_original_noisy.to(get_device()))
     output_g6 = torch.squeeze(output_g6)
     output_g6 = output_g6.cpu().detach().numpy().transpose(1,2,0)
+    #MODEL7
+    model_g7.to(get_device())
+    output_g7 = model_g7(t_original_noisy.to(get_device()))
+    output_g7 = torch.squeeze(output_g7)
+    output_g7 = output_g7.cpu().detach().numpy().transpose(1,2,0)
     #MODEL8
     model_g8.to(get_device())
     output_g8 = model_g8(t_original_noisy.to(get_device()))
     output_g8 = torch.squeeze(output_g8)
     output_g8 = output_g8.cpu().detach().numpy().transpose(1,2,0)
+    #MODEL9
+    model_g9.to(get_device())
+    output_g9 = model_g9(t_original_noisy.to(get_device()))
+    output_g9 = torch.squeeze(output_g9)
+    output_g9 = output_g9.cpu().detach().numpy().transpose(1,2,0)
 
 
     #DISPLAY IMAGES
     plt.imshow(original_clean)
+    plt.title("Original clean")
     plt.show()
     plt.imshow(original_noisy)
+    plt.title("Original noisy")
     plt.show()
     plt.imshow(output_g1)
+    plt.title("output_g1")
     plt.show()
     plt.imshow(output_g2)
+    plt.title("output_g2")
     plt.show()
     plt.imshow(output_g3)
+    plt.title("output_g3")
     plt.show()
     plt.imshow(output_g4)
+    plt.title("output_g4")
     plt.show()
     plt.imshow(output_g5)
+    plt.title("output_g5")
     plt.show()
     plt.imshow(output_g6)
+    plt.title("output_g6")
+    plt.show()
+    plt.imshow(output_g7)
+    plt.title("output_g7")
     plt.show()
     plt.imshow(output_g8)
+    plt.title("output_g8")
+    plt.show()
+    plt.imshow(output_g9)
+    plt.title("output_g9")
     plt.show()
 
     images = [original_clean, original_noisy, output_g4]
@@ -123,7 +156,7 @@ def inference(image_number = 316):
         axs[ix].imshow(images[ix])
     plt.show()
 
-    images_models = [output_g1, output_g2, output_g3, output_g4, output_g5, output_g6, output_g8]
+    images_models = [output_g1, output_g2, output_g3, output_g4, output_g5, output_g6, output_g7, output_g8, output_g9]
     fig, axs = plt.subplots(2, 4, figsize=[25, 20])
     for ix in range(7):
         if ix < 3:

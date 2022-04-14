@@ -19,9 +19,11 @@ from utils.parser import args
 def train_GAN(model_g, model_d, config):
   #Generator
   optimizer_g = optim.Adam(model_g.parameters(), lr=config["lr"])
+  #scheduler_g = optim.ReduceLROnPlateau(optimizer_g, 'min', patience=18, factor=0.1)
   model_g = model_g.to(get_device())
   #Discriminator 
   optimizer_d = optim.Adam(model_d.parameters(), lr =config["lr"])
+  #scheduler_d = optim.ReduceLROnPlateau(optimizer_d, 'min', patience=18, factor=0.1)
   model_d = model_d.to(get_device())
 
   #Get train/test loaders
@@ -40,6 +42,9 @@ def train_GAN(model_g, model_d, config):
   print(f"TRAINING GAN START - {datetime.datetime.now()} - Your are training your model using {get_device()}")
 
   for epoch in range(config["epochs"]):
+    if epoch == 18:
+      optimizer_g = optim.Adam(model_g.parameters(), lr=0.00001)
+      optimizer_d = optim.Adam(model_d.parameters(), lr=0.00001)
     loss_train_d, loss_train_g, ssim_train, psnr_train = train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g=criterionL1, criterion_d=criterionGAN, d_weight=config["d_weight"])
     update_history_metrics_g('training', loss_train_g.item(), ssim_train.item(), psnr_train.item())
     update_history_metrics_d('training', loss_train_d.item())
@@ -51,6 +56,8 @@ def train_GAN(model_g, model_d, config):
     if epoch%config['log_interval']==0:
       print(f"Eval epoch: {epoch} -- Loss Generator: {loss_val:.2f} -- SSIM: {ssim_val:.2f} -- PSNR: {psnr_val:.2f}")
     
+    #scheduler_g.step(loss_val)
+    #scheduler_d.step(loss_val)
     logger.log_generator_training(model_g, epoch, loss_train_g, ssim_train, psnr_train, loss_val, ssim_val, psnr_val, reconstruction_image)
     logger.log_discriminator_training(epoch, loss_train_d)
 

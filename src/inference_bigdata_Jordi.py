@@ -23,6 +23,7 @@ def inference(image_number = 316):
     model9_path = "./checkpoints/generator-20220414-153423.pt"
     model10_path = "./checkpoints/gan-20220414-180436/model_g-20220414-180436.pt"
     model11_path = "./checkpoints/gan-20220414-202819/model_g-20220414-202819.pt"
+    model12_path = "./checkpoints/gan-20220415-133925/model_g-20220415-133925.pt"
 
     checkpoint1 = torch.load(model1_path)
     model_g1 = GeneratorUNet()
@@ -57,6 +58,9 @@ def inference(image_number = 316):
     checkpoint11 = torch.load(model11_path)
     model_g11 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
     model_g11.load_state_dict(checkpoint11["model_state_dict"])
+    checkpoint12 = torch.load(model11_path)
+    model_g12 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
+    model_g12.load_state_dict(checkpoint12["model_state_dict"])
 
     #PATH TO A PAIR OF IMAGES TO APPLY INFERENCE f"Eval epoch: {epoch}
     #noisy_path = f"./dataset/original/image_{image_number}_rgb_noise.PNG"
@@ -131,6 +135,11 @@ def inference(image_number = 316):
     output_g11 = model_g11(t_original_noisy.to(get_device()))
     output_g11 = torch.squeeze(output_g11)
     output_g11 = output_g11.cpu().detach().numpy().transpose(1,2,0)
+    #MODEL12
+    model_g12.to(get_device())
+    output_g12 = model_g12(t_original_noisy.to(get_device()))
+    output_g12 = torch.squeeze(output_g12)
+    output_g12 = output_g12.cpu().detach().numpy().transpose(1,2,0)
 
 
     #DISPLAY IMAGES
@@ -173,6 +182,9 @@ def inference(image_number = 316):
     plt.imshow(output_g11)
     plt.title("output_g11")
     plt.show()
+    plt.imshow(output_g12)
+    plt.title("output_g12")
+    plt.show()
 
     images = [original_clean, original_noisy, output_g4]
     fig, axs = plt.subplots(1, 3, figsize=[25, 20])
@@ -180,7 +192,7 @@ def inference(image_number = 316):
         axs[ix].imshow(images[ix])
     plt.show()
 
-    images_models = [output_g1, output_g2, output_g3, output_g4, output_g5, output_g6, output_g7, output_g8, output_g9, output_g10, output_g11]
+    images_models = [output_g1, output_g2, output_g3, output_g4, output_g5, output_g6, output_g7, output_g8, output_g9, output_g10, output_g11, output_g12]
     fig, axs = plt.subplots(2, 4, figsize=[25, 20])
     for ix in range(7):
         if ix < 3:

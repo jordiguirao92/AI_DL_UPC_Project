@@ -3,3 +3,6 @@ dataset/.DS_Store
 logs
 dataset/
 checkpoints/
+src/inference_bigdata.py
+src/inference.py
+src/inference_allmodels.py

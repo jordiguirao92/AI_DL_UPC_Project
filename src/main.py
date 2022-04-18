@@ -16,7 +16,8 @@ if __name__ == "__main__":
         "generator_norm": args.generator_norm,
         "discriminator_last": args.discriminator_last,
         "discriminator_norm": args.discriminator_norm,
-        "discriminator_activation": args.discriminator_activation
+        "discriminator_activation": args.discriminator_activation,
+        "discriminator_size": args.discriminator_size
     }
 
     if args.generator_last == "sigmoid":

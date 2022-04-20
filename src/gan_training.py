@@ -75,7 +75,7 @@ def train_GAN(model_g, model_d, config):
 def gan_init(config):
     print(f"CONFIGURATION PARAMETERS: {config}")
     model_g = GeneratorUNet(normalization=config["generator_last"], normalization_layer=config["generator_norm"])
-    model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"])
+    model_d = Discriminator(normalization=config["discriminator_last"], normalization_layer=config["discriminator_norm"], activation=config["discriminator_activation"], output_size=config["discriminator_size"])
     model_g, model_d = train_GAN(model_g, model_d, config)
     #get_plot_image(model_g)
     save_model(model_g, f"./checkpoints/model_g-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.pt")

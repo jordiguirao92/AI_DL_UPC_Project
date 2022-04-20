@@ -9,7 +9,7 @@ import torch.nn as nn
 
 def inference(image_number = 316):
     #TRANSFORMS TO APPLY
-    transform_inference = transforms.Compose([transforms.ToPILImage(), transforms.Resize(256), transforms.ToTensor()])
+    transform_inference = transforms.Compose([transforms.ToPILImage(), transforms.CenterCrop(256), transforms.ToTensor()])
 
     #PATH TO THE MODEL --> Load the model --> Create new model --> Load weights from the model
     model1_path = "./checkpoints/gan-20220407-200005/model_g-20220407-200005.pt" #FULL OUR DATASET GAN 10 EPOCHS

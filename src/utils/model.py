@@ -55,7 +55,7 @@ def test_model_generator(test_loader, model, criterion):
     print(f"Loss Generator: {test_losses:.2f} -- SSIM: {test_ssims:.2f} -- PSNR: {test_psnrs:.2f}")
 
 # GAN TRAINING FUNCTIONS
-def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g, criterion_d, d_weight):
+def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, scheduler_g, optimizer_d, scheduler_d, criterion_g, criterion_d, d_weight):
     model_g.train()
     model_d.train()
     losses_d, losses_g, ssims, psnrs = [], [], [], []
@@ -82,6 +82,7 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, cr
 
         loss_d.backward()
         optimizer_d.step()
+        scheduler_d.step()
 
         '''
         Generator
@@ -97,6 +98,7 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, cr
 
         loss_g.backward()
         optimizer_g.step()
+        scheduler_g.step()
 
 
         ssim = get_ssim(clean_real, clean_fake)

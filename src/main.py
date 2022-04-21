@@ -7,7 +7,8 @@ from generator_training import generator_init
 
 if __name__ == "__main__":
     config = {
-        "lr": args.lr,
+        "lr_g": args.lr_g,
+        "lr_d": args.lr_d,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
         "log_interval": 1,

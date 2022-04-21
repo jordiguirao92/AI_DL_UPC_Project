@@ -13,5 +13,6 @@ parser.add_argument("--generator_norm", help="batch, instance, spectral", type=s
 parser.add_argument("--discriminator_last", help="sigmoid or tanh", type=str, default="sigmoid")
 parser.add_argument("--discriminator_norm", help="batch, instance, spectral", type=str, default="batch")
 parser.add_argument("--discriminator_activation", help="leakyRelu, relu", type=str, default="leakyRelu")
+parser.add_argument("--discriminator_size", help="14, 15 or 1", type=int, default=14)
 
 args = parser.parse_args()

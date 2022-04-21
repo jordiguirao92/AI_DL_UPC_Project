@@ -6,5 +6,9 @@ checkpoints/
 src/inference_bigdata.py
 src/inference.py
 src/inference_allmodels.py
+<<<<<<< HEAD
 src/original_stats.py
 src/inference_allmodels_new.py
+=======
+src/original_stats.py
+>>>>>>> d896ca257d15fb40b19d03599eb31bbcd2787477

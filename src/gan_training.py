@@ -42,9 +42,9 @@ def train_GAN(model_g, model_d, config):
   print(f"TRAINING GAN START - {datetime.datetime.now()} - Your are training your model using {get_device()}")
 
   for epoch in range(config["epochs"]):
-    #if epoch == 18:
-      #optimizer_g = optim.Adam(model_g.parameters(), lr=0.00001)
-      #optimizer_d = optim.Adam(model_d.parameters(), lr=0.00001)
+    if epoch == 18:
+      optimizer_g = optim.Adam(model_g.parameters(), lr=0.00001)
+      optimizer_d = optim.Adam(model_d.parameters(), lr=0.00001)
     loss_train_d, loss_train_g, ssim_train, psnr_train = train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, optimizer_d, criterion_g=criterionL1, criterion_d=criterionGAN, d_weight=config["d_weight"])
     update_history_metrics_g('training', loss_train_g.item(), ssim_train.item(), psnr_train.item())
     update_history_metrics_d('training', loss_train_d.item())

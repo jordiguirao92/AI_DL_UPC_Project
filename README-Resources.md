@@ -27,7 +27,7 @@ Information of resources that can be util for the project development.
 - Exportar comando miniconda: ` export PATH=~/miniconda3/bin:$PATH`
 - Check GPU: `hwinfo --gfxcard --short` or `sudo lshw -C display`
 - Checklogs inside docker-compose: `sudo docker-compose logs -t -f --tail="all" > namefile.log`
-- Dowload file from the instace: `gcloud compute scp --recurse image-denoising:/home/upcaigooglecloud2/AI_DL_UPC_Project/checkpoints /Users/jordiguiraomuns/Download`
+- Dowload file from the instace: `gcloud compute scp --recurse image-denoising:/home/upcaigooglecloud2/AI_DL_UPC_Project/checkpoints /Users/jordiguiraomuns/Downloads`
 
 ## Artificial noise with Pytorch
 ```python

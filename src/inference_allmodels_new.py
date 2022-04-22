@@ -31,6 +31,7 @@ model12_path = "./checkpoints/model_g-20220421-231856.pt"
 model13_path = "./checkpoints/model_g-20220421-231856.pt"
 model14_path = "./checkpoints/model_g-20220422-173925.pt"
 model15_path = "./checkpoints/model_g-20220422-173146.pt"
+model17_path = "./checkpoints/model_g-20220422-185010.pt"
 
 
 #LOAD MODELS
@@ -94,6 +95,10 @@ checkpoint15 = torch.load(model15_path)
 model_g15 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
 model_g15.load_state_dict(checkpoint15["model_state_dict"])
 
+checkpoint17 = torch.load(model17_path)
+model_g17 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
+model_g17.load_state_dict(checkpoint17["model_state_dict"])
+
 #INPUT DATA
 if difficulty=="easy":
     noisy_path = f"./dataset/images/image_302_5_rgb_noise.png"
@@ -119,7 +124,7 @@ if big:
     models = [model_g2, model_g10]
     device = "cpu"
 else:
-    models = [model_g1, model_g2, model_g3, model_g4, model_g5, model_g6, model_g7, model_g8, model_g9, model_g10, model_g11, model_g12, model_g13]
+    models = [model_g1, model_g2, model_g3, model_g4, model_g5, model_g6, model_g7, model_g8, model_g9, model_g10, model_g11, model_g12, model_g13, model_g17]
     device = get_device()
 
 outputs = []

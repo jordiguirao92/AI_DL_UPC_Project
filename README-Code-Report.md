@@ -6,7 +6,7 @@
 - Google Cloud
 - Make
 
-## Start the project
+## Start the project :relaxed:
 Use the following steps to start the project.
 
 ### Create environment

@@ -99,10 +99,11 @@ def train_epoch_GAN(train_loader, model_g, model_d, optimizer_g, scheduler_g, op
 
         loss_g.backward()
         optimizer_g.step()
-        scheduler_g.step(loss_g)
-
+        
         ssim = get_ssim(clean_real, clean_fake)
         psnr = get_psnr(clean_real, clean_fake)
+
+        scheduler_g.step(psnr)
 
         losses_d.append(loss_d.item())
         losses_g.append(loss_g.item())

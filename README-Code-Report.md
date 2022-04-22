@@ -3,14 +3,14 @@ Use the following steps to start the project.
 
 ### Prepare dataset steps
 
-### [Option 1 - Dowload the prepared images] {#option1}
+### Option 1 - Dowload the prepared images
 - Dowload the dataset from the following link: https://mega.nz/folder/Erg2EYiS#kVS2e-nAGL3etSqgeZ4lbw The images folder container the prepared dataset with the correct image name, also contain the validation, training and testing txt files.
 - Copy the folder `images` in the `./dataset/`.
 - Now, you have your dataset prepared.
 
 
-### Option 2 - Dowload original images {#option1}
-- Dowload the original images from the following link: https://www.eecs.yorku.ca/~kamel/sidd/dataset.php If you use this way, you need to download the images in different parts. We recomment to use the [option1](#my-anchor).
+### Option 2 - Dowload original images
+- Dowload the original images from the following link: https://www.eecs.yorku.ca/~kamel/sidd/dataset.php If you use this way, you need to download the images in different parts. We recomment to use the [option1](###option-1-dowload-the-prepared-images).
 - In the folder `/dataset/original` paste the original images
 - In orde to rename original images, slice, move and rename sliced images run the command: `python ./src/utils/prepare_dataset.py`
 

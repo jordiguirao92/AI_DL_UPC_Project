@@ -27,7 +27,7 @@ Use the following steps to start the project.
 - Now you have your project environment ready. Continue with the [preparation of dataset](#prepare-dataset-steps).
 
 
-### Prepare dataset steps :open_file_folder:
+### Prepare dataset :open_file_folder:
 #### Option A - Dowload the prepared images
 - Dowload the dataset from the following link: https://mega.nz/folder/Erg2EYiS#kVS2e-nAGL3etSqgeZ4lbw The images folder container the prepared dataset with the correct image name, also contain the validation, training and testing txt files.
 - Copy the folder `images` in the `./dataset/`.

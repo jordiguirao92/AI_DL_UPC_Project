@@ -1,4 +1,4 @@
-## Technologies used for the project
+## Technologies used for the project :computer:
 - Python
 - Pytorch
 - Minoconda
@@ -6,10 +6,10 @@
 - Google Cloud
 - Make
 
-## Start the project :relaxed:
+## Start the project :smiley:
 Use the following steps to start the project.
 
-### Create environment
+### Create environment :book:
 
 #### Option A - Using Miniconda
 - Install miniconda in your computer. You can follow the steps in this link: https://docs.conda.io/en/latest/miniconda.html
@@ -27,7 +27,7 @@ Use the following steps to start the project.
 - Now you have your project environment ready. Continue with the [preparation of dataset](#prepare-dataset-steps).
 
 
-### Prepare dataset steps
+### Prepare dataset steps :open_file_folder:
 #### Option A - Dowload the prepared images
 - Dowload the dataset from the following link: https://mega.nz/folder/Erg2EYiS#kVS2e-nAGL3etSqgeZ4lbw The images folder container the prepared dataset with the correct image name, also contain the validation, training and testing txt files.
 - Copy the folder `images` in the `./dataset/`.
@@ -42,7 +42,7 @@ Use the following steps to start the project.
 
 
 
-### Run the project
+### Run the project :runner:
 
 In the [parser file](./src/utils/parser.py) you can find the posible configurations of the training. Feel free to change the configurations.
 
@@ -73,7 +73,7 @@ In the [parser file](./src/utils/parser.py) you can find the posible configurati
 After the training you can find the checkpoints [here](./checkpoints) and the training logs [here](./logs).
 
 
-### Check logs with tensorboard
+### Check logs with tensorboard :chart_with_upwards_trend:
 We use tensorboard to check the logs. When you run a training you the logs of the process will appear in the folder `./logs`.
 In order to check the logs in tensorboard, run the following command: `tensorboard --logdir=logs`
 

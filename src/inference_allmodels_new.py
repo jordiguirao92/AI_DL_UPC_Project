@@ -26,9 +26,11 @@ model7_path = "./checkpoints/gan-20220421-082534-7/model_g-20220421-082534.pt"
 model8_path = "./checkpoints/model_g-20220421-153743.pt"
 model9_path = "./checkpoints/model_g-20220421-163014.pt"
 model10_path = "./checkpoints/model_g-20220421-213633.pt"
-
+model11_path = "./checkpoints/model_g-20220421-203349.pt"
 model12_path = "./checkpoints/model_g-20220421-231856.pt"
 model13_path = "./checkpoints/model_g-20220421-231856.pt"
+model14_path = "./checkpoints/model_g-20220422-173925.pt"
+model15_path = "./checkpoints/model_g-20220422-173146.pt"
 
 
 #LOAD MODELS
@@ -72,6 +74,10 @@ checkpoint10 = torch.load(model10_path)
 model_g10 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
 model_g10.load_state_dict(checkpoint10["model_state_dict"])
 
+checkpoint11 = torch.load(model11_path)
+model_g11 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
+model_g11.load_state_dict(checkpoint11["model_state_dict"])
+
 checkpoint12 = torch.load(model12_path)
 model_g12 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
 model_g12.load_state_dict(checkpoint12["model_state_dict"])
@@ -79,6 +85,14 @@ model_g12.load_state_dict(checkpoint12["model_state_dict"])
 checkpoint13 = torch.load(model13_path)
 model_g13 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
 model_g13.load_state_dict(checkpoint13["model_state_dict"])
+
+checkpoint14 = torch.load(model14_path)
+model_g14 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
+model_g14.load_state_dict(checkpoint14["model_state_dict"])
+
+checkpoint15 = torch.load(model15_path)
+model_g15 = GeneratorUNet(normalization=nn.Tanh(), normalization_layer="spectral")
+model_g15.load_state_dict(checkpoint15["model_state_dict"])
 
 #INPUT DATA
 if difficulty=="easy":
@@ -105,7 +119,7 @@ if big:
     models = [model_g2, model_g10]
     device = "cpu"
 else:
-    models = [model_g1, model_g2, model_g3, model_g4, model_g5, model_g6, model_g7, model_g8, model_g9, model_g10, model_g12, model_g13]
+    models = [model_g1, model_g2, model_g3, model_g4, model_g5, model_g6, model_g7, model_g8, model_g9, model_g10, model_g11, model_g12, model_g13]
     device = get_device()
 
 outputs = []

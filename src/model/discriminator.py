@@ -30,7 +30,7 @@ class Discriminator(nn.Module):
         self.conv2 = nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1) #64
         self.conv3 = nn.Conv2d(128, 256, kernel_size=4, stride=2, padding=1) #32
         self.conv4 = nn.Conv2d(256, 512, kernel_size=4, stride=2, padding=1) #16
-        if self.output_size == 15:
+        if self.output_size == 14:
           self.conv5 = nn.Conv2d(512, 512, kernel_size=4, padding=1) #15
         else:
           self.conv5 = nn.Conv2d(512, 512, kernel_size=4, stride = 2, padding=1)#8

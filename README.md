@@ -81,9 +81,9 @@ In order to check the logs in tensorboard, run the following command: `tensorboa
 
 ## Troubles and challenges :sweat:
 
-### Instance requirements and configuration:
+### Instance requirements and configuration
 Due to our inexperience we have had some doubts about instance configuration and requirements, as how much memory we need, which GPU is more suitable, instance configurations, etc.
-### Google Cloud GPU:
+### Google Cloud GPU
 Google Cloud don’t let you add GPUs to your instance without authorization. We had needed to request for a GPU to Google Cloud. In some cases, the response is so fast, but in other ones not.
 ### Dataset selection and preparation
 Find a good dataset that match with the project necessities sometimes is a hard task. In our case, we had the possibility to create our noise image dataset, but finally we decided to select a dataset with real noisy images in order to work in a real environment. One of the most important tasks is to prepare and adapt the dataset to our project

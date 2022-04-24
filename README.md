@@ -16,7 +16,7 @@ Create a GANs for image denoising. First of all, we tried to prepare the images 
  1. [Introduction](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#introduction) 
      * [Why image denoising?](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising)
      * [Choice of the model](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#choicheofthemodel)
-     * [General architecture]((https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#generalarchitecture)
+     * [General architecture](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#generalarchitecture)
  2. [Milestones](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#milestones)
  3. [Methods](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#whyimagedenoising#methods)
      * [Pix2pix](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#pix2pix)

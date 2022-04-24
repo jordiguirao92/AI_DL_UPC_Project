@@ -93,7 +93,7 @@ _Figure 3: UNet architecture, image taken from: https://towardsdatascience.com/p
 
 ## Dataset
 
-Two different datasets were selected according to the goal,  both providing clean - noisy image pairs. The  PolyU-Real-World-Noisy-Images-Dataset was initially used in our Google Colag, to explore the general architecture of the model, while  the Smartphone Image Denoising Dataset was used for the final training. The final dataset contains 634 images of 4000x3000 pixels that were cropped to 12. So, we finally generated 7608 images, splitted into training, validation and testing sets. The training set was covered by 70% of the images, the validation by 15% and the test 15% too. At the beginning we tried to train our model by using the whole dataset but it was too computationally expensive. For this reason, and according to what the authors of the model suggested, we decided to train our model using a reduced dataset of 408 pares, obtaining good results. The evaluation dataset was reduced to 96 pares while the test set size was not modified, since we were not worried about the timing of the train and also to provide the same test set used previously. A second crop of 256 was applied, generating a final input of 256x256x3. The final dataset is available and we provide the following link to access and take a look to it:https://mega.nz/folder/Erg2EYiS#kVS2e-nAGL3etSqgeZ4lbw.  
+Two different datasets were selected according to the goal,  both providing clean - noisy image pairs. The  PolyU-Real-World-Noisy-Images-Dataset was initially used in our Google Colag, to explore the general architecture of the model, while  the Smartphone Image Denoising Dataset was used for the final training. The final dataset contains 634 images of 4000x3000 pixels that were cropped to 12. So, we finally generated 7608 images, splitted into training, validation and testing sets. The training set was covered by 70% of the images, the validation by 15% and the test 15% too. At the beginning we tried to train our model by using the whole dataset but it was too computationally expensive. For this reason, and according to what the authors of the model suggested, we decided to train our model using a reduced dataset of 408 pairs, obtaining good results. The evaluation dataset was reduced to 96 pairs while the test set size was not modified, since we were not worried about the timing of the train and also to provide the same test set used previously. A second crop of 256 was applied, generating a final input of 256x256x3. The final dataset is available and we provide the following link to access and take a look to it:https://mega.nz/folder/Erg2EYiS#kVS2e-nAGL3etSqgeZ4lbw.  
 
 ![example of cleannoisy](https://miro.medium.com/max/1400/1*5bsoVIT2La_5-GDK6Vljyg.png)
 
@@ -159,26 +159,35 @@ To explore all the potentialities of our model we performed different types of t
 We decided to perform the following test:
 
 1. Evaluate the generator only;
-2. EValuate the whole GAN with the PatchGAN suggested by the authors (70x70);
+2. Evaluate the whole GAN with the PatchGAN suggested by the authors (70x70);
 3. Evaluate the whole GAN changing the PatchGAN size. 
 
-Name	| Test SSIM	| Test PSNR	| Test Loss	| Net | 	LR	 | Batch Size |	Epochs	 | Loss	| D_weight	| Gen Last |	Gen Norm |	Disc Last	 | Disc Norm	| Disc Act	| Disc Size | 	Dataset | 
-:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | 
-GAN-training-20220420-200407	| 0.83	| 27.82 |	0.01	| GAN	| 0.0001| 	4 |	25	| L1	| 40	 | Sigmoid |	Batch	| Sigmoid	| Batch	| LeakyRelu	 | 14	| Reduced Github
-GAN-training-20220422-180735	| 0.83	 |24.45 |	0.00 |	GAN	| Scheduler 3	| 4	| 25	| L1	| 5	| Tanh |	Spectral	| Tanh	| Batch	| LeakyRelu	| 15 |	Reduced Github
-generator-training-20220420-195655 |	0.91 |	32.05 |	0.02	| Generator	| 0.0001 |	4	| 25	| L1| 	NA	| Tanh	| Spectral	| NA	| NA |	NA	 | NA |	Reduced Github
-GAN-training-20220421-04226	| 0.88 |	31.34 |	0.00	| GAN	| 0.0001 + HardCode at epoch 18 to 0.00001 |	4	| 25	| L1	| 40	| Tanh	| Spectral	| Tanh	| Instance	| LeakyRelu	| 14 |	Reduced Github
-GAN-training-20220421-205256	| 0.88	| 31.56	| 0.00	| GAN	| Scheduler  2	| 4	| 25	| L1	| 10	| Tanh	| Spectral |	Sigmoid |	Instance	| LeakyRelu	| 1	| Reduced Github
-GAN-training-20220422-180332| 	0.87	| 30.48 |	0.00	| GAN	| Scheduler  3	| 4	| 25 |	L1	 |40	| Tanh	| Spectral |	Tanh	| Batch	| LeakyRelu |	15	| Reduced Github
-GAN-training-20220422-191636 |	0.89 |	32.41 |	0.00	| GAN	 | Scheduler 3	| 4	| 25	| L1	| 40	| Tanh |	Spectral |	Sigmoid	 | Batch |	LeakyRelu	| 15 |	Reduced Github
-GAN-training-20220422-201239	| 0.90 |	32.93 |	0.00 |	GAN	| Scheduler  4	| 4	| 25	| L1	| 40	| Tanh |	Spectral |	Sigmoid |	Batch	| LeakyRelu	 | 14	| Reduced Github
+Name	| Test SSIM	| Test PSNR	| Net | 	LR	 | Batch Size |	Epochs	 | Loss	| D_weight	| Gen Last |	Gen Norm |	Disc Last	 | Disc Norm	| Disc Act	| Disc Size | 	Dataset | 
+:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: |
+GAN-training-20220420-200407	| 0.83	| 27.82 | GAN	| 0.0001| 	4 |	25	| L1	| 40	 | Sigmoid |	Batch	| Sigmoid	| Batch	| LeakyRelu	 | 14	| Reduced Github
+GAN-training-20220422-180735	| 0.83	 |24.45 |GAN	| Scheduler 3	| 4	| 25	| L1	| 5	| Tanh |	Spectral	| Tanh	| Batch	| LeakyRelu	| 15 |	Reduced Github
+generator-training-20220420-195655 |	0.91 |	32.05 |	Generator	| 0.0001 |	4	| 25	| L1| 	NA	| Tanh	| Spectral	| NA	| NA |	NA	 | NA |	Reduced Github
+GAN-training-20220421-04226	| 0.88 |	31.34 |	GAN	| 0.0001 + HardCode at epoch 18 to 0.00001 |	4	| 25	| L1	| 40	| Tanh	| Spectral	| Tanh	| Instance	| LeakyRelu	| 14 |	Reduced Github
+GAN-training-20220421-205256	| 0.88	| 31.56	| GAN	| Scheduler  2	| 4	| 25	| L1	| 10	| Tanh	| Spectral |	Sigmoid |	Instance	| LeakyRelu	| 1	| Reduced Github
+GAN-training-20220422-180332| 	0.87	| 30.48 |	GAN	| Scheduler  3	| 4	| 25 |	L1	 |40	| Tanh	| Spectral |	Tanh	| Batch	| LeakyRelu |	15	| Reduced Github
+GAN-training-20220422-191636 |	0.89 |	32.41 |	GAN	 | Scheduler 3	| 4	| 25	| L1	| 40	| Tanh |	Spectral |	Sigmoid	 | Batch |	LeakyRelu	| 15 |	Reduced Github
+GAN-training-20220422-201239	| 0.90 |	32.93 |	GAN	| Scheduler  4	| 4	| 25	| L1	| 40	| Tanh |	Spectral |	Sigmoid |	Batch	| LeakyRelu	 | 14	| Reduced Github
 
 Once obtained our best model, we ran it using 100 epochs:
 
-Name	| Test SSIM	| Test PSNR	| Test Loss	| Net | 	LR	 | Batch Size |	Epochs	 | Loss	| D_weight	| Gen Last |	Gen Norm |	Disc Last	 | Disc Norm	| Disc Act	| Disc Size | 	Dataset | 
-:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | 
-GAN-training-20220422-201239| 0.90	| 34.62	| 0.00	| GAN	| Scheduler  4 |	4	| 100	| L1	| 40	| Tanh |	Spectral |	Sigmoid |	Batch	| LeakyRelu	 | 14 | Reduced Github
+Name	| Test SSIM	| Test PSNR	| Net | 	LR	 | Batch Size |	Epochs	 | Loss	| D_weight	| Gen Last |	Gen Norm |	Disc Last	 | Disc Norm	| Disc Act	| Disc Size | 	Dataset | 
+:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: |
+GAN-training-20220422-201239| 0.90	| 34.62	| GAN	| Scheduler  4 |	4	| 100	| L1	| 40	| Tanh |	Spectral |	Sigmoid |	Batch	| LeakyRelu	 | 14 | Reduced Github
 
+Note that there is some notation for different learning rate schedulers. All of them are based on ReduceLROnPlateau:
+
+Name | Generator Mode | Generator Metric | Generator Patience | Generator Factor | Discriminator Mode | Discriminator Metric | Discriminator Patience | Discriminator Factor |
+:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: |
+Scheduler 1 | min | loss_g | 200 | 0.5 | min | loss_d | 400 | 0.8
+Scheduler 2 | max | ssim | 500 | 0.5 | min | loss_d | 1000 | 0.8
+Scheduler 3 | max | psnr | 700 | 0.75 | min | loss_d | 1200 | 0.9
+Scheduler 4 | max | psnr | 1000 | 0.65 | min | loss_d | 1200 | 0.9
+Scheduler 5 | max | ssim | 1000 | 0.65 | min | loss_d | 1200 | 0.9
 
 ## Results 
 
@@ -204,7 +213,7 @@ _Fogure 7: comparison of two generated images. The first one is from our selecte
 
 ## Metrics
 
-In light blue the best GAN model (GAN-training-20220422-201239), in orange the generator only model (generator-training-20220420-195655) and in dark blue the worse GAN model (GAN-training-20220420-200407):
+In light blue the best GAN model (GAN-training-20220422-201239), in orange the generator only model (generator-training-20220420-195655) and in dark blue the first GAN model that we trained (GAN-training-20220420-200407):
 
 ![Schermata 2022-04-24 alle 16 31 53](https://user-images.githubusercontent.com/62135962/164981547-6d124582-16be-4712-b502-904f09d723ea.png)
 
@@ -231,7 +240,7 @@ Our project was aimed to reslve the image denoising issue, by using a pix2pix mo
 ## Technologies used for the project :computer:
 - Python
 - Pytorch
-- Minoconda
+- Miniconda
 - Docker & Docker Compose
 - Google Cloud
 - Make
@@ -252,7 +261,7 @@ Use the following steps to start the project.
 
 #### Option B - Using Docker & Docker Compose
 - Install Docker in your computer. You can follow the steps in this link: https://docs.docker.com/desktop/#download-and-install
-- Install Docker Compose in your computer. You can folloe the setps in this link: https://docs.docker.com/compose/install/
+- Install Docker Compose in your computer. You can follow the setps in this link: https://docs.docker.com/compose/install/
 - If you use GPU install Docker requirements to let Docker use computer GPU in the container. You can install requirements using the following link: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
 - Now you have your project environment ready. Continue with the [preparation of dataset](#prepare-dataset-steps).
 
@@ -344,4 +353,4 @@ Due to our inexperience, we need to do a lot of trainings and testing different 
 - First try to get a good generator model alone, and after that try to improve it with a Discriminator.
 - Better to train with a reduced dataset.
 - Using a scheduler could provide better results.
-- Understand what you are doing to take better decisions.
+- Understand what we were doing to take better decisions.

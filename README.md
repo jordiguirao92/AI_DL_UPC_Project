@@ -75,6 +75,27 @@ In the [parser file](./src/utils/parser.py) you can find the posible configurati
 After the training you can find the checkpoints [here](./checkpoints) and the training logs [here](./logs).
 
 
-### Check logs with tensorboard :chart_with_upwards_trend:
+## Check logs with tensorboard :chart_with_upwards_trend:
 We use tensorboard to check the logs. When you run a training you the logs of the process will appear in the folder `./logs`.
 In order to check the logs in tensorboard, run the following command: `tensorboard --logdir=logs`
+
+## Troubles and challenges :confounded:
+
+### Instance requirements and configuration:
+Due to our inexperience we have had some doubts about instance configuration and requirements, as how much memory we need, which GPU is more suitable, instance configurations, etc.
+### Google Cloud GPU:
+Google Cloud don’t let you add GPUs to your instance without authorization. We had needed to request for a GPU to Google Cloud. In some cases, the response is so fast, but in other ones not.
+### Dataset selection and preparation
+Find a good dataset that match with the project necessities sometimes is a hard task. In our case, we had the possibility to create our noise image dataset, but finally we decided to select a dataset with real noisy images in order to work in a real environment. One of the most important tasks is to prepare and adapt the dataset to our project
+### Bad TXT dataset files
+One of the big bugs during the project was that we created a TXT files with the clear and noisy images. Our dataset charges the image files in a wrong way. We were creating pairs with clearly and noise images, the results of our training were not properly correct. Due to this mistake, we needed to repeat all the model trainings. It was a hard experience.
+### Transfer dataset to Google Cloud instance
+We needed to do research about the best way to upload images to a Google Cloud instance in a fast way. Finally, we decided to use SCP. It works so fast.
+### GPU Nvidia drivers & Cuda installation
+We have had some difficulties during the GPU Nvidia drivers & Cuda installation. Finally, thanks to Google and our project mentor, our model works with cuda. 
+### Docker configuration
+Due to the problems with GPU drivers and cuda installation, we decided to use docker to create our development environment. Docker is very useful because you only need to prepare the image configuration one time, after that you can use it in different instances, avoiding all the configurations a requirements installations difficulty. Also, we have some difficulties to find the good configuration of our Dockerfile image. One of the challenges was to configure the Docker to use GPU.
+### Linux/Windows
+The team members have different OS to work, ones use Windows and others uses Linux. Python paths and other process works different in Windows and Linux. It was a little mess. Finally, thanks to the instance, it was solved.
+### Find the best possible model
+Due to our inexperience, we need to do a lot of trainings and testing different training configurations and hyperparameters in order to find the best model for the project.

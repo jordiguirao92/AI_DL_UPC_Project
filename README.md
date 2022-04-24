@@ -79,7 +79,7 @@ After the training you can find the checkpoints [here](./checkpoints) and the tr
 We use tensorboard to check the logs. When you run a training you the logs of the process will appear in the folder `./logs`.
 In order to check the logs in tensorboard, run the following command: `tensorboard --logdir=logs`
 
-## Troubles and challenges :confounded:
+## Troubles and challenges :sweat:
 
 ### Instance requirements and configuration:
 Due to our inexperience we have had some doubts about instance configuration and requirements, as how much memory we need, which GPU is more suitable, instance configurations, etc.

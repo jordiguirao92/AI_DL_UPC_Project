@@ -1,5 +1,156 @@
 # Image Denoising
 
+# AI_DL_UPC_Project
+Final Project for the UPC Artificial Intelligence with Deep Learning Postgraduate Course 2021-2022 edition, authored by:
+* Adrià Hdez
+* Alessia Squitieri
+* Jordi Guirao
+* Nil Mira
+
+Advised by professor Eva Mohedano
+
+## Objective
+Create a GANs for image denoising. First of all, we tried to prepare the images with artificial noise, but after analyzing it, we have decided to search for a dataset with real noised images, to do a better real approach in the model. We want to apply the model in real cases and not in artificial noisy cases. 
+
+## Table of content
+ 1. Introduction
+     * Why image denoising?
+     * Choice of the model
+     * General architecture 
+ 2. Milestones
+ 3. Methods 
+     * Pix2pix
+ 4. Dataset
+ 5. Environment set up 
+ 6. Preliminary tests
+ 7. Experiments
+ 8. Metrics
+ 9. Conclusions and future goals
+
+## Introduction
+
+### _Why image denoising?_
+
+Due to inherent physical limitations of various recording devices, denoising has been an important problem in image processing for many decades[1]. Noise refers to a basic signal distortion which hinders the process of image observation and information extraction[1]. There are different types of noise that can prevail according to the kind of image. As described by A. Buades et al. in A REVIEW OF IMAGE DENOISING ALGORITHMS, WITH A NEW ONE, the most frequently discussed noises are Additive White Gaussian Noise (AWGN), impulse noise (salt and pepper), quantisation noise, Poisson noise and speckle noise. Image denoising is aimed at recovering a clean image x from a noisy observation y which follows an image degradation model y = x + v[2].
+
+### _Choice of the model_
+
+Despite the incredible number of applications that Convolutional Neural Networks (CNNs) provide in the field of image prediction problems, they are not the best solution when dealing with image to image translation tasks. In fact, since CNNs try to minimize the distance between predicted and ground truth pixels, it will tend to produce blurry results[3]. 
+
+### _General architecture_
+
+In this context, a great solution has been provided by Generative Adversarial Networks (GANs). GANs, instead,  learn a loss that tries to classify if the output image is real or fake and, at the same time, they train a generative model to minimize this loss. For this reason, blurry images will not be tolerated, since they look obviously fake. In a general way, a GAN is formed by a generator (G) and a discriminator (D). The G is aimed to be trained to produce outputs that cannot be distinguished from “real” images by an adversarially trained D, which , instead, is trained to do as well as possible at detecting the generator’s “fakes”. The general structure of a GAN is shown in the figure below.  
+
+
+![fig 1-Generator-and-Discriminator](https://learnopencv.com/wp-content/uploads/2021/07/Pix2Pix-Discriminator-working-as-patch-discriminator-1.jpg)
+
+_Figure 1: general architecture of a cGAN, taken from:https://learnopencv.com/paired-image-to-image-translation-pix2pix/#discriminator_
+
+
+In 2014, Conditional Generative Adversarial Nets by Mehdi Mirza and Simon Osindero was published. The main idea behind this GANs implementation is that both generator and discriminator are fed a class label  and conditioned on it. All other components are exactly the same as a typical  Generative Adversarial Networks. In order to accomplish our task, we decided to implement a pix2pix model, a specific type of conditional GAN (cGAN). 
+
+
+## Milestones
+* Obtain simulated images,
+* Providing a working Pix2Pix mode,
+* Optimizing final model through hyperparameters tuning,
+*  Providing a well functioning and user friendly way to reproduce the model.
+
+
+## Methods 
+
+### _Pix2Pix Model_
+
+
+
+![Pix2pix](https://learnopencv.com/wp-content/uploads/2021/07/pix-2-pix-GAN-a-type-of-CGAN.jpg) 
+
+_Figure 2: Pix2pix model, image taken from the original paper._
+
+
+A pix2pix model is a special type of cGAN in which the G follows a U-Net architecture and the D is a patchGAN. 
+
+The U-Net architecture is shown in the figure above. It is a symmetric structure that consists of two major parts, the left part that is called contracting, which is formed by a general convolutional process, and the right part that is the expansive path, constituted by a transposed 2d convolutional layer[https://towardsdatascience.com/unet-line-by-line-explanation-9b191c76baf5]. 
+The D is instead a PatchGAN, that only penalizes structure at the scale of patches. This discriminator tries to classify if each N ×N patch in an image is real or fake, described in [3]. The authors demonstrated that N can be much smaller than the full size of the image and still produce high quality results. This is advantageous because a smaller PatchGAN has fewer parameters, runs faster, and can be applied to arbitrarily large images.
+
+
+![UNet](https://miro.medium.com/max/1400/1*J3t2b65ufsl1x6caf6GiBA.png)
+
+_Figure 3: UNet architecture, image taken from: https://towardsdatascience.com/paper-summary-u-net-convolutional-networks-for-biomedical-image-segmentation-13f4851ccc5e_
+
+
+## Dataset
+
+Two different datasets were selected according to the goal,  both providing clean - noisy image pairs. The  PolyU-Real-World-Noisy-Images-Dataset was initially used in our Google Colag, to explore the general architecture of the model, while  the Smartphone Image Denoising Dataset was used for the final training. The final dataset contains 634 images of 4000x3000 pixels that were cropped to 12. So, we finally generated 7608 images, splitted into training, validation and testing sets. The training set was covered by 70% of the images, the validation by 15% and the test 15% too. At the beginning we tried to train our model by using the whole dataset but it was too computationally expensive. For this reason, and according to what the authors of the model suggested, we decided to train our model using a reduced dataset of 408 pares, obtaining good results. The evaluation dataset was reduced to 96 pares while the test set size was not modified, since we were not worried about the timing of the train and also to provide the same test set used previously. A second crop of 256 was applied, generating a final input of 256x256x3. The final dataset is available and we provide the following link to access and take a look to it:https://mega.nz/folder/Erg2EYiS#kVS2e-nAGL3etSqgeZ4lbw.  
+
+![example of cleannoisy](https://miro.medium.com/max/1400/1*5bsoVIT2La_5-GDK6Vljyg.png)
+
+_Figure 4: example of clean - noisy image pairs, taken by https://medium.com/analytics-vidhya/image-denoising-using-deep-learning-dc2b19a3fd54_
+
+
+## Environment set up 
+
+We used Google colab to design and test our model, because it provides a single 12GB NVIDIA Tesla K80 GPU that can be used for up to 12 hours continuously. We also created a Google Cloud Deep Learning VM instance for longer training, using the following parameters:
+
+Instance parameters  | 
+------------- |
+us-central1-a | 
+n1-standard-8 | 
+GPU: 1x Nvidia Tesla P4 | 
+Disco SSD persistente 100GB | 
+1 GPU | 
+
+
+The whole model was developed in Python programming language, using the Pytorch library. Finally, Visual Studio code was selected as code editor and the whole development process was implemented using this GitHub repository. We also provide a Docker image to use our final model. 
+
+## Preliminary tests
+
+Our first approach, in order to better understand the pix2pix functionality, has been working on a Google Colab. We implemented a first model, based on the main characteristic we found from the original paper. Through the following link it is possibile access and have a look at our Google Colab. We used only 100 pairs of images to try the model, setting the following hyperparameters: 
+
+
+Batch size  | Number of epochs | Test batch size | Learning rate | Log interval | Criterion |
+:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+1 | 50 | 1 | 1e-3 | 5 | L1 | 
+
+
+Our model implementation was inspired by Pix2Pix:Image-to-Image Translation in PyTorch & TensorFlow and by the original paper[4]. As commented before, the model used was a pix2pix. For the data pre - processing part, we developed some functions to read, sort and crop the images. We used the OpenCV with the functions:
+
+* `cv2.imread()` : The function imread loads an image from the specified file and returns; 1 is for NOT gray scale images
+
+* `cv2.cvtColor()` : Converts an image from one color space to another. When code is cv2.COLOR_BGR2RGB, BGR is converted to RGB.
+
+Then, we implemented the generator. As said before, the generator is a U-Net. The architecture is “U-shaped”, hence the name “U-Net”. The first half represents the contracting part and the second one the upsampling one. To implement the encoder part we used the following Pytorch functions:
+
+* `Conv2D`: Applies a 2D convolution over an input signal composed of several input planes.
+* `nn.ReLU()`: Applies the rectified linear unit function element-wise: ReLU(x)=(x)+=max(0,x)
+* `nn.MaxPool2d`: Applies a 2D max pooling over an input signal composed of several input planes.
+* `nn.BatchNorm2d`: Applies Batch Normalization over a 4D input (a mini-batch of 2D inputs with additional channel dimension) as described in the paper Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift .
+* `nn.InstanceNorm2d`: Applies Instance Normalization over a 4D input (a mini-batch of 2D inputs with additional channel dimension) as described in the paper Instance Normalization: The Missing Ingredient for Fast Stylization.
+* `nn.utils.spectral_norm`: Spectral normalization stabilizes the training of discriminators (critics) in Generative Adversarial Networks (GANs) by rescaling the weight tensor with spectral norm of the weight matrix calculated using power iteration method. If the dimension of the weight tensor is greater than 2, it is reshaped to 2D in the power iteration method to get spectral norm. This is implemented via a hook that calculates spectral norm and rescales weight before every forward() call. See Spectral Normalization for Generative Adversarial Networks.
+ 
+Basically, the encoder consists of a sequence of blocks for down-sampling operations. Each block includes several convolution layers, followed by max-pooling layers. After each down - sampling operation, the number of filters in the convolutional layers is doubled. In the end, the encoder outputs a learned feature map for the input image. The decoder, instead,  is designed for up-sampling. The decoder first utilizes a deconvolutional layer to up-sample the feature map generated by the encoder. The deconvolutional layer contains the transposed convolution operation, that is represented in Pytorch by:
+* `ConvTranspose2d`: Applies a 2D transposed convolution operator over an input image composed of several input planes. This module can be seen as the gradient of Conv2d with respect to its input. It is also known as a fractionally-strided convolution or a deconvolution (although it is not an actual deconvolution operation as it does not compute a true inverse of convolution).
+In the decoder part we do not apply the max pooling operation, because we are not trying to reduce the image. Finally, we create the last class in which the encoder and decoder are merged in a unique function (the U-Net generator one). 
+
+Then, we define the Discriminator, that is a PathGAN. This type of discriminator tries to classify if each N ×N patch in an image is real or fake[4]. Moreover, in the pix2pix model the classification is conditioned. Infact, the discriminator takes both the source image and the target image as input and predicts the likelihood of whether the target image is real or a fake translation of the source image. 
+
+![disc](https://www.researchgate.net/publication/339832261/figure/fig5/AS:867699496345602@1583887089690/The-PatchGAN-structure-in-the-discriminator-architecture.ppm)
+
+_Figure 5: patchGAN discriminator illustration, taken from https://www.researchgate.net/figure/The-PatchGAN-structure-in-the-discriminator-architecture_fig5_339832261_ 
+
+## Experiments 
+
+To explore all the potentialities of our model we performed different types of tests. Our first implementations have been made in the Google Colab to give us a general idea of the model potentialities. Following the experiments performed by the authors of the pix2pix model, we also worked on the discriminator receptive field. The receptive field is the relationship between one output activation of the model to an area on the input image. In pix2pix the receptive field can be understood as the patch gan size. As written in the original paper “​​ … we design a discriminator architecture – which we term a PatchGAN – that only penalizes structure at the scale of patches. This discriminator tries to classify if each NxN patch in an image is real or fake. We run this discriminator convolutionally across the image, averaging all responses to provide the ultimate output of D.” According to the paper, it can be calculated with the following equation: 
+
+` receptive field = (output size - 1) * stride + kernel size `
+
+We decided to perform the following test:
+
+1. Evaluate the generator only;
+2. EValuate the whole GAN with the PatchGAN suggested by the authors;
+3. Evaluate the whole GAN changing the PatchGAN size. 
+
+
 ## Technologies used for the project :computer:
 - Python
 - Pytorch

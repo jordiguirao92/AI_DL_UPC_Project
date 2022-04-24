@@ -193,16 +193,21 @@ _Fogure 7: comparison of two generated images. The first one is from our selecte
 ## Metrics
 
 In light blue the best GAN model (GAN-training-20220422-201239), in orange the generator only model (generator-training-20220420-195655) and in dark blue the worse GAN model (GAN-training-20220420-200407):
+
 ![Schermata 2022-04-24 alle 16 31 53](https://user-images.githubusercontent.com/62135962/164981547-6d124582-16be-4712-b502-904f09d723ea.png)
+
 ![Schermata 2022-04-24 alle 16 31 56](https://user-images.githubusercontent.com/62135962/164981546-c524b4a2-48af-4f9b-af4d-e6f59e390ee2.png)
 
 Since the GAN-training-20220422-201239 returned best results, we trained it using 100 epochs and as you can see from the plots below, the metrics improved: 
+
 ![Schermata 2022-04-24 alle 16 31 59](https://user-images.githubusercontent.com/62135962/164981545-d325e2d6-6990-46cf-9f50-34fd385534e9.png)
 
 In green the results of the good GAN model using 100 epochs. 
 
 All the models compared:
+
 ![Schermata 2022-04-24 alle 16 32 03](https://user-images.githubusercontent.com/62135962/164981543-1e8a2025-72a1-40f2-8135-4f84bc6b0387.png)
+
 ![Schermata 2022-04-24 alle 16 32 06](https://user-images.githubusercontent.com/62135962/164981538-56a58e09-53de-4bb8-b667-dd67d90145b0.png)
 
 ## Conclusion and future goals

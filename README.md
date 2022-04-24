@@ -12,31 +12,40 @@ Advised by professor Eva Mohedano
 ## Objective
 Create a GANs for image denoising. First of all, we tried to prepare the images with artificial noise, but after analyzing it, we have decided to search for a dataset with real noised images, to do a better real approach in the model. We want to apply the model in real cases and not in artificial noisy cases. 
 
-## Table of content
- 1. [Introduction](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#introduction) 
-     * [Why image denoising?](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising)
-     * [Choice of the model](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#choicheofthemodel)
-     * [General architecture](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWyimagedenoising#generalarchitecture)
- 2. [Milestones](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#milestones)
- 3. [Methods](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#whyimagedenoising#methods)
-     * [Pix2pix](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#pix2pix)
- 4. [Dataset](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#dataset)
- 5. [Environment set up](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#environmentsetup)
- 6. [Preliminary tests](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#preliminarytests)
- 7. [Experiments](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#experiments)
- 8. [Results](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#results)
- 9. [Metrics](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#metrics)
- 10. [Conclusions and future goals](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#conclusionsandfuturegoals)
+## Table of content 
+
+- [Introduction](#introduction)
+  * [_Why image denoising?_](#-why-image-denoising--)
+  * [_Choice of the model_](#-choice-of-the-model-)
+  * [_General architecture_](#-general-architecture-)
+- [Milestones](#milestones)
+- [Methods](#methods)
+  * [_Pix2Pix Model_](#-pix2pix-model-)
+- [Dataset](#dataset)
+- [Environment set up](#environment-set-up)
+- [Preliminary tests](#preliminary-tests)
+- [Experiments](#experiments)
+- [Results](#results)
+- [Metrics](#metrics)
+- [Conclusion and future goals](#conclusion-and-future-goals)
+- [Technologies used for the project :computer:](#technologies-used-for-the-project--computer-)
+
+<a name="introduction"/>
 
 ## Introduction
+<a name="-why-image-denoising--"/>
 
 ### _Why image denoising?_
 
 Due to inherent physical limitations of various recording devices, denoising has been an important problem in image processing for many decades[1]. Noise refers to a basic signal distortion which hinders the process of image observation and information extraction[1]. There are different types of noise that can prevail according to the kind of image. As described by A. Buades et al. in A REVIEW OF IMAGE DENOISING ALGORITHMS, WITH A NEW ONE, the most frequently discussed noises are Additive White Gaussian Noise (AWGN), impulse noise (salt and pepper), quantisation noise, Poisson noise and speckle noise. Image denoising is aimed at recovering a clean image x from a noisy observation y which follows an image degradation model y = x + v[2].
 
+<a name="-choice-of-the-model-"/>
+
 ### _Choice of the model_
 
 Despite the incredible number of applications that Convolutional Neural Networks (CNNs) provide in the field of image prediction problems, they are not the best solution when dealing with image to image translation tasks. In fact, since CNNs try to minimize the distance between predicted and ground truth pixels, it will tend to produce blurry results[3]. 
+
+<a name="-general-architecture-"/>
 
 ### _General architecture_
 
@@ -57,8 +66,10 @@ In 2014, Conditional Generative Adversarial Nets by Mehdi Mirza and Simon Osinde
 * Optimizing final model through hyperparameters tuning,
 *  Providing a well functioning and user friendly way to reproduce the model.
 
+<a name="methods"/>
 
 ## Methods 
+<a name="-pix2pix-model-"/>
 
 ### _Pix2Pix Model_
 
@@ -215,6 +226,7 @@ All the models compared:
 
 Our project was aimed to reslve the image denoising issue, by using a pix2pix model. Having a look to the state of the art of this task, we noticed that the pix2pix model was not included. So far, looking at our results, we belive that cGAN and in particular pix2pix model could be included in a future benchmarking. It would be interesting to compare our model to the others reported in the state of the art for images denoising and see if, using the same conditions of the others models, we can reach the same results than we obtained now. We could not perform this comparison for a metter of time, but it would be in our future goals. 
 
+<a name="technologies-used-for-the-project--computer-"/>
 
 ## Technologies used for the project :computer:
 - Python

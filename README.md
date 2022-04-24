@@ -147,8 +147,52 @@ To explore all the potentialities of our model we performed different types of t
 We decided to perform the following test:
 
 1. Evaluate the generator only;
-2. EValuate the whole GAN with the PatchGAN suggested by the authors;
+2. EValuate the whole GAN with the PatchGAN suggested by the authors (70x70);
 3. Evaluate the whole GAN changing the PatchGAN size. 
+
+Name	| Test SSIM	| Test PSNR	| Test Loss	| Net | 	LR	 | Batch Size |	Epochs	 | Loss	| D_weight	| Gen Last |	Gen Norm |	Disc Last	 | Disc Norm	| Disc Act	| Disc Size | 	Dataset | 
+:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | 
+GAN-training-20220420-200407	| 0.83	| 27.82 |	0.01	| GAN	| 0.0001| 	4 |	25	| L1	| 40	 | Sigmoid |	Batch	| Sigmoid	| Batch	| LeakyRelu	 | 14	| Reduced Github
+GAN-training-20220422-180735	| 0.83	 |24.45 |	0.00 |	GAN	| Scheduler 3	| 4	| 25	| L1	| 5	| Tanh |	Spectral	| Tanh	| Batch	| LeakyRelu	| 15 |	Reduced Github
+generator-training-20220420-195655 |	0.91 |	32.05 |	0.02	| Generator	| 0.0001 |	4	| 25	| L1| 	NA	| Tanh	| Spectral	| NA	| NA |	NA	 | NA |	Reduced Github
+GAN-training-20220421-04226	| 0.88 |	31.34 |	0.00	| GAN	| 0.0001 + HardCode at epoch 18 to 0.00001 |	4	| 25	| L1	| 40	| Tanh	| Spectral	| Tanh	| Instance	| LeakyRelu	| 14 |	Reduced Github
+GAN-training-20220421-205256	| 0.88	| 31.56	| 0.00	| GAN	| Scheduler  2	| 4	| 25	| L1	| 10	| Tanh	| Spectral |	Sigmoid |	Instance	| LeakyRelu	| 1	| Reduced Github
+GAN-training-20220422-180332| 	0.87	| 30.48 |	0.00	| GAN	| Scheduler  3	| 4	| 25 |	L1	 |40	| Tanh	| Spectral |	Tanh	| Batch	| LeakyRelu |	15	| Reduced Github
+GAN-training-20220422-191636 |	0.89 |	32.41 |	0.00	| GAN	 | Scheduler 3	| 4	| 25	| L1	| 40	| Tanh |	Spectral |	Sigmoid	 | Batch |	LeakyRelu	| 15 |	Reduced Github
+GAN-training-20220422-201239	| 0.90 |	32.93 |	0.00 |	GAN	| Scheduler  4	| 4	| 25	| L1	| 40	| Tanh |	Spectral |	Sigmoid |	Batch	| LeakyRelu	 | 14	| Reduced Github
+
+Once obtained our best model, we ran it using 100 epochs:
+
+Name	| Test SSIM	| Test PSNR	| Test Loss	| Net | 	LR	 | Batch Size |	Epochs	 | Loss	| D_weight	| Gen Last |	Gen Norm |	Disc Last	 | Disc Norm	| Disc Act	| Disc Size | 	Dataset | 
+:-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------:  | :-------------: | :-------------: | :-------------: | :-------------: | 
+GAN-training-20220422-201239| 0.90	| 34.62	| 0.00	| GAN	| Scheduler  4 |	4	| 100	| L1	| 40	| Tanh |	Spectral |	Sigmoid |	Batch	| LeakyRelu	 | 14 | Reduced Github
+
+
+## Results 
+
+In order to evaluate the models we used two different metrics, the Structural Similarity Index and the peak signal-to-noise ratio. The Structural Similarity Index (SSIM) is a perceptual metric that quantifies image quality degradation* caused by processing such as data compression or by losses in data transmission. It is a full reference metric that requires two images from the same image capture— a reference image and a processed image. The PSNR block computes the peak signal-to-noise ratio, in decibels, between two images. This ratio is used as a quality measurement between the original and a compressed image. The higher the PSNR, the better the quality of the compressed, or reconstructed image.
+We initially trained only the generator, achieving very good results. So, our goal was implementing a complete model (generator and discriminator) having better performance than the generator only. In fact, adding the discriminator to the model can be challanging since it is not so easy find the right configuration between the generator and the discriminator. For this reason, our first complete models performed worse than the generator only. However, after different benchmarking we finally obtained a model achieving best results of the generator only. The **GAN-training-20220422-201239** reached best results. 
+
+This is an example of how the generated image looks like using the **GAN-training-20220422-201239** mdoel:
+
+![model_19_True_easy](https://user-images.githubusercontent.com/62135962/164976919-51514ad7-ba24-4b4b-a7f8-2c2f7df0032d.png)
+
+_Figure 6: an example of generated image from our best model_ 
+
+
+![model_19_False_easy](https://user-images.githubusercontent.com/62135962/164976983-6cc1486a-300f-42e4-a681-7cba11782560.png)
+![model_1_False_easy](https://user-images.githubusercontent.com/62135962/164976986-8c68a6ac-d7a0-47e3-adaa-7267a7463415.png)
+
+_Figure 6: comparison of two generated images from ours model. The first one is from our selected model, while the other is from our first model GAN-training-20220420-200407_ 
+
+![model_19_False_easy](https://user-images.githubusercontent.com/62135962/164976983-6cc1486a-300f-42e4-a681-7cba11782560.png)
+![model_2_False_easy](https://user-images.githubusercontent.com/62135962/164977337-e6855a41-a419-4e56-a8ef-674d8ee17373.png)
+
+_Fogure 7: comparison of two generated images. The first one is from our selected model, while the second one is obtained from the generator only_ 
+
+## Conclusion and future goals
+
+Our project was aimed to reslve the image denoising issue, by using a pix2pix model. Having a look to the state of the art of this task, we noticed that the pix2pix model was not included. So far, looking at our results, we belive that cGAN and in particular pix2pix model could be included in a future benchmarking. It would be interesting to compare our model to the others reported in the state of the art for images denoising and see if, using the same conditions of the others models, we can reach the same results than we obtained now. We could not perform this comparison for a metter of time, but it would be in our future goals. 
 
 
 ## Technologies used for the project :computer:

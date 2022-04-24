@@ -1,0 +1,7 @@
+__pycache__/
+dataset/.DS_Store
+logs/*
+logs_old/*
+dataset/
+checkpoints/*
+*.log

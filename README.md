@@ -93,7 +93,7 @@ _Figure 4: example of clean - noisy image pairs, taken by https://medium.com/ana
 We used Google colab to design and test our model, because it provides a single 12GB NVIDIA Tesla K80 GPU that can be used for up to 12 hours continuously. We also created a Google Cloud Deep Learning VM instance for longer training, using the following parameters:
 
 Instance parameters  | 
-------------- |
+:-------------: |
 us-central1-a | 
 n1-standard-8 | 
 GPU: 1x Nvidia Tesla P4 | 

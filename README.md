@@ -109,10 +109,11 @@ Due to our inexperience, we need to do a lot of trainings and testing different 
 - Create a good code structure. It will make it easier in front of changes.
 - Separate big functions in small functions.
 - Check that the dataset class is corrected defined.
+- Fix the version of the the required project libraries.
 - Select appropriate metrics to evaluate results.
 - Defined a group of models to test. Iterate through results.
 - Set up model without big changes to find the good performance.
 - First try to get a good generator model alone, and after that try to improve it with a Discriminator.
 - Better to train with a reduced dataset.
-- Using a scheduler can provide better results.
+- Using a scheduler could provide better results.
 - Understand what you are doing to take better decisions.

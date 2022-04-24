@@ -99,3 +99,20 @@ Due to the problems with GPU drivers and cuda installation, we decided to use do
 The team members have different OS to work, ones use Windows and others uses Linux. Python paths and other process works different in Windows and Linux. It was a little mess. Finally, thanks to the instance, it was solved.
 ### Find the best possible model
 Due to our inexperience, we need to do a lot of trainings and testing different training configurations and hyperparameters in order to find the best model for the project.
+
+## Development Learnings :thumbsup:
+
+- Find a suitable dataset.
+- Avoid to spend a lot of time in preparing the dataset.
+- Try to use Docker. It will make it easier to deploy.
+- Before start, try to define a realistic project plan.
+- Create a good code structure. It will make it easier in front of changes.
+- Separate big functions in small functions.
+- Check that the dataset class is corrected defined.
+- Select appropriate metrics to evaluate results.
+- Defined a group of models to test. Iterate through results.
+- Set up model without big changes to find the good performance.
+- First try to get a good generator model alone, and after that try to improve it with a Discriminator.
+- Better to train with a reduced dataset.
+- Using a scheduler can provide better results.
+- Understand what you are doing to take better decisions.

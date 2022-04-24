@@ -13,19 +13,20 @@ Advised by professor Eva Mohedano
 Create a GANs for image denoising. First of all, we tried to prepare the images with artificial noise, but after analyzing it, we have decided to search for a dataset with real noised images, to do a better real approach in the model. We want to apply the model in real cases and not in artificial noisy cases. 
 
 ## Table of content
- 1. Introduction
-     * Why image denoising?
-     * Choice of the model
-     * General architecture 
- 2. Milestones
- 3. Methods 
-     * Pix2pix
- 4. Dataset
- 5. Environment set up 
- 6. Preliminary tests
- 7. Experiments
- 8. Metrics
- 9. Conclusions and future goals
+ 1. [Introduction](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#introduction) 
+     * [Why image denoising?](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising)
+     * [Choice of the model](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#choicheofthemodel)
+     * [General architecture]((https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#generalarchitecture)
+ 2. [Milestones](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#milestones)
+ 3. [Methods](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#whyimagedenoising#methods)
+     * [Pix2pix](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#pix2pix)
+ 4. [Dataset](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#dataset)
+ 5. [Environment set up](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#environmentsetup)
+ 6. [Preliminary tests](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#preliminarytests)
+ 7. [Experiments](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#experiments)
+ 8. [Results](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#results)
+ 9. [Metrics](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#metrics)
+ 10. [Conclusions and future goals](https://github.com/jordiguirao92/AI_DL_UPC_Project/edit/develop-docker/README.md#wWhyimagedenoising#conclusionsandfuturegoals)
 
 ## Introduction
 

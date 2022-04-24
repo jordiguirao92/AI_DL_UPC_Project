@@ -19,7 +19,7 @@ from utils.parser import args
 def train_GAN(model_g, model_d, config):
   #Generator
   optimizer_g = optim.Adam(model_g.parameters(), lr=config["lr_g"])
-  scheduler_g = optim.lr_scheduler.ReduceLROnPlateau(optimizer_g, mode="max", patience=700, factor=0.75)
+  scheduler_g = optim.lr_scheduler.ReduceLROnPlateau(optimizer_g, mode="max", patience=1000, factor=0.65)
   model_g = model_g.to(get_device())
   #Discriminator 
   optimizer_d = optim.Adam(model_d.parameters(), lr =config["lr_d"])

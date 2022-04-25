@@ -194,22 +194,28 @@ Scheduler 5 | max | ssim | 1000 | 0.65 | min | loss_d | 1200 | 0.9
 In order to evaluate the models we used two different metrics, the Structural Similarity Index and the peak signal-to-noise ratio. The Structural Similarity Index (SSIM) is a perceptual metric that quantifies image quality degradation* caused by processing such as data compression or by losses in data transmission. It is a full reference metric that requires two images from the same image capture— a reference image and a processed image. The PSNR block computes the peak signal-to-noise ratio, in decibels, between two images. This ratio is used as a quality measurement between the original and a compressed image. The higher the PSNR, the better the quality of the compressed, or reconstructed image.
 We initially trained only the generator, achieving very good results. So, our goal was implementing a complete model (generator and discriminator) having better performance than the generator only. In fact, adding the discriminator to the model can be challanging since it is not so easy find the right configuration between the generator and the discriminator. For this reason, our first complete models performed worse than the generator only. However, after different benchmarking we finally obtained a model achieving best results of the generator only. The **GAN-training-20220422-201239** reached best results. 
 
+![results_comparison](https://user-images.githubusercontent.com/81079515/165116281-a4e3e853-53c0-4426-bf2f-991f13228929.PNG)
+_Figure 6a: Comparison of the different metrics with different models_ 
+
 This is an example of how the generated image looks like using the **GAN-training-20220422-201239** mdoel:
 
 ![model_19_True_easy](https://user-images.githubusercontent.com/62135962/164976919-51514ad7-ba24-4b4b-a7f8-2c2f7df0032d.png)
 
-_Figure 6: an example of generated image from our best model_ 
+_Figure 6b: an example of generated image from our best model_ 
 
 
 ![model_19_False_easy](https://user-images.githubusercontent.com/62135962/164976983-6cc1486a-300f-42e4-a681-7cba11782560.png)
 ![model_1_False_easy](https://user-images.githubusercontent.com/62135962/164976986-8c68a6ac-d7a0-47e3-adaa-7267a7463415.png)
 
-_Figure 6: comparison of two generated images from ours model. The first one is from our selected model, while the other is from our first model GAN-training-20220420-200407_ 
+_Figure 6c: comparison of two generated images from ours model. The first one is from our selected model, while the other is from our first model GAN-training-20220420-200407_ 
+
+![collage_ruido](https://user-images.githubusercontent.com/81079515/165117178-2b176ab1-7cc8-4ed6-b90b-9e18189285c3.png)
+_Figure 6d: Finally, comparison between input clean image (up left), input noisy image (up right), output first model (down left) and the final model (down right)_ 
 
 ![model_19_False_easy](https://user-images.githubusercontent.com/62135962/164976983-6cc1486a-300f-42e4-a681-7cba11782560.png)
 ![model_2_False_easy](https://user-images.githubusercontent.com/62135962/164977337-e6855a41-a419-4e56-a8ef-674d8ee17373.png)
 
-_Fogure 7: comparison of two generated images. The first one is from our selected model, while the second one is obtained from the generator only_ 
+_Figure 7: comparison of two generated images. The first one is from our selected model, while the second one is obtained from the generator only_ 
 
 ## Metrics
 
